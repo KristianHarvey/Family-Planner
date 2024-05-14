@@ -1,5 +1,6 @@
 
 using System.Net;
+using FamilyPlanner.Models.RefreshTokenModel;
 
 namespace FamilyPlanner.Models {
     public sealed class APIResponse {
@@ -9,15 +10,24 @@ namespace FamilyPlanner.Models {
             IsError = isError;
             StatusCode = statusCode;
         }
-        public APIResponse(dynamic data, string token, string message, bool isError, HttpStatusCode statusCode) {
+        public APIResponse(dynamic data, string accessToken, string refreshToken, string message, bool isError, HttpStatusCode statusCode) {
             Data = data;
-            Token = token;
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
             Message = message;
             IsError = isError;
             StatusCode = statusCode;
         }
-        public APIResponse(string token, string message, bool isError, HttpStatusCode statusCode) {
-            Token = token;
+        public APIResponse(dynamic data, string token, string message, bool isError, HttpStatusCode statusCode) {
+            Data = data;
+            AccessToken = token;
+            Message = message;
+            IsError = isError;
+            StatusCode = statusCode;
+        }
+        public APIResponse(string accessToken, string refreshToken, string message, bool isError, HttpStatusCode statusCode) {
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
             Message = message;
             IsError = isError;
             StatusCode = statusCode;
@@ -29,7 +39,8 @@ namespace FamilyPlanner.Models {
         }
 
         public dynamic? Data { get; set; }
-        public string? Token { get; set; }
+        public string? AccessToken { get; set; }
+        public string? RefreshToken { get; set; }
         public string? Message { get; set; }
         public bool? IsError { get; set; } 
         public HttpStatusCode? StatusCode { get; set; } 

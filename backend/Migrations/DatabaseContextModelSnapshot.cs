@@ -23,26 +23,29 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DayKey")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PlanId")
+                    b.Property<int?>("PlannedDayId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserUid")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlanId");
+                    b.HasIndex("PlannedDayId");
 
                     b.ToTable("Activities");
                 });
@@ -53,12 +56,217 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("FamilyColor")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserUid")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Families");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.InviteModel.Invite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FromUserUid")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ToFamilyId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ToUserUid")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserUid");
+
+                    b.HasIndex("ToFamilyId");
+
+                    b.HasIndex("ToUserUid");
+
+                    b.ToTable("Invites");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappAllergen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Contains")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("KassalappModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ShoppingListItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KassalappModelId");
+
+                    b.HasIndex("ShoppingListItemId");
+
+                    b.ToTable("KassalappAllergen");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("CurrentUnitPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EAN")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUri")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Ingredients")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("StoreId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Vendor")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("KassalappProducts");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappNutrition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("KassalappModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ShoppingListItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KassalappModelId");
+
+                    b.HasIndex("ShoppingListItemId");
+
+                    b.ToTable("KassalappNutrition");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappPriceHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("KassalappModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ShoppingListItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KassalappModelId");
+
+                    b.HasIndex("ShoppingListItemId");
+
+                    b.ToTable("KassalappPriceHistory");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappStore", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LogoUri")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KassalappStore");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.MealModel.Meal", b =>
@@ -74,52 +282,93 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PlanId")
+                    b.Property<int?>("PlannedDayId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("RecipeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("RecipeId1")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PlanId");
+                    b.HasIndex("PlannedDayId");
 
                     b.HasIndex("RecipeId");
-
-                    b.HasIndex("RecipeId1");
 
                     b.ToTable("Meals");
                 });
 
-            modelBuilder.Entity("FamilyPlanner.Models.PlanModel.Plan", b =>
+            modelBuilder.Entity("FamilyPlanner.Models.PlannedDayModel.PlannedDay", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DayKey")
+                    b.Property<string>("DayKey")
+                        .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("FamilyId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserUid")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FamilyId");
+
+                    b.HasIndex("UserUid");
+
+                    b.ToTable("PlannedDays");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.PlannedTaskModel.PlannedTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AssignedToId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("FamilyId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("PlannedDayId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UserUid")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("WeeklyPlannerId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserUid");
+                    b.HasIndex("AssignedToId");
 
-                    b.HasIndex("WeeklyPlannerId");
+                    b.HasIndex("FamilyId");
 
-                    b.ToTable("Plans");
+                    b.HasIndex("PlannedDayId");
+
+                    b.ToTable("PlannedTasks");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.RecipeModel.Recipe", b =>
@@ -154,26 +403,58 @@ namespace backend.Migrations
                     b.ToTable("Recipe");
                 });
 
+            modelBuilder.Entity("FamilyPlanner.Models.RefreshTokenModel.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserUid")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("FamilyPlanner.Models.ShoppingListModel.ShoppingList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("FamilyId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PlanId")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("PlannedDayId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserUid")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlanId");
+                    b.HasIndex("PlannedDayId");
 
-                    b.ToTable("ShoppingList");
+                    b.ToTable("ShoppingLists");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.ShoppingListModel.ShoppingListItem", b =>
@@ -181,6 +462,27 @@ namespace backend.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal?>("CurrentPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal?>("CurrentUnitPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EAN")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Ingredients")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -192,11 +494,17 @@ namespace backend.Migrations
                     b.Property<int?>("ShoppingListId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ShoppingListId");
 
-                    b.ToTable("ShoppingListItem");
+                    b.ToTable("ShoppingListItems");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.TaskModel.TaskItem", b =>
@@ -205,34 +513,39 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AssignedUserId")
+                    b.Property<int?>("AssignedUserId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatedByUid")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PlanId")
+                    b.Property<int?>("PlannedTaskId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AssignedUserId");
 
-                    b.HasIndex("PlanId");
+                    b.HasIndex("PlannedTaskId");
 
-                    b.ToTable("TaskItem");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.UserModel.User", b =>
@@ -260,12 +573,15 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PlanId")
+                    b.Property<int?>("ProfileImageId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("SelectedFamilyId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Uid")
                         .IsRequired()
@@ -274,34 +590,46 @@ namespace backend.Migrations
                     b.Property<string>("UserUid")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ActivityId");
 
-                    b.HasIndex("PlanId");
+                    b.HasIndex("ProfileImageId")
+                        .IsUnique();
+
+                    b.HasIndex("SelectedFamilyId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FamilyPlanner.Models.WeeklyPlannerModel.WeeklyPlanner", b =>
+            modelBuilder.Entity("FamilyPlanner.models.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("FamilyId")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Uri")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserUid")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FamilyId");
-
-                    b.HasIndex("UserUid");
-
-                    b.ToTable("WeeklyPlanners");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("UserFamily", b =>
@@ -321,40 +649,136 @@ namespace backend.Migrations
 
             modelBuilder.Entity("FamilyPlanner.Models.ActivityModel.Activity", b =>
                 {
-                    b.HasOne("FamilyPlanner.Models.PlanModel.Plan", null)
+                    b.HasOne("FamilyPlanner.Models.PlannedDayModel.PlannedDay", "PlannedDay")
                         .WithMany("Activities")
-                        .HasForeignKey("PlanId");
+                        .HasForeignKey("PlannedDayId");
+
+                    b.Navigation("PlannedDay");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.InviteModel.Invite", b =>
+                {
+                    b.HasOne("FamilyPlanner.Models.UserModel.User", "FromUser")
+                        .WithMany("SentInvites")
+                        .HasForeignKey("FromUserUid")
+                        .HasPrincipalKey("Uid")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FamilyPlanner.Models.FamilyModel.Family", "Family")
+                        .WithMany()
+                        .HasForeignKey("ToFamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FamilyPlanner.Models.UserModel.User", "ToUser")
+                        .WithMany("ReceivedInvites")
+                        .HasForeignKey("ToUserUid")
+                        .HasPrincipalKey("Uid")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Family");
+
+                    b.Navigation("FromUser");
+
+                    b.Navigation("ToUser");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappAllergen", b =>
+                {
+                    b.HasOne("FamilyPlanner.Models.KassalappModel.KassalappModel", null)
+                        .WithMany("Allergens")
+                        .HasForeignKey("KassalappModelId");
+
+                    b.HasOne("FamilyPlanner.Models.ShoppingListModel.ShoppingListItem", null)
+                        .WithMany("Allergens")
+                        .HasForeignKey("ShoppingListItemId");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappModel", b =>
+                {
+                    b.HasOne("FamilyPlanner.Models.KassalappModel.KassalappStore", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("Store");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappNutrition", b =>
+                {
+                    b.HasOne("FamilyPlanner.Models.KassalappModel.KassalappModel", null)
+                        .WithMany("Nutritions")
+                        .HasForeignKey("KassalappModelId");
+
+                    b.HasOne("FamilyPlanner.Models.ShoppingListModel.ShoppingListItem", null)
+                        .WithMany("Nutritions")
+                        .HasForeignKey("ShoppingListItemId");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappPriceHistory", b =>
+                {
+                    b.HasOne("FamilyPlanner.Models.KassalappModel.KassalappModel", null)
+                        .WithMany("PriceHistory")
+                        .HasForeignKey("KassalappModelId");
+
+                    b.HasOne("FamilyPlanner.Models.ShoppingListModel.ShoppingListItem", null)
+                        .WithMany("PriceHistory")
+                        .HasForeignKey("ShoppingListItemId");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.MealModel.Meal", b =>
                 {
-                    b.HasOne("FamilyPlanner.Models.PlanModel.Plan", null)
+                    b.HasOne("FamilyPlanner.Models.PlannedDayModel.PlannedDay", "PlannedDay")
                         .WithMany("Meals")
-                        .HasForeignKey("PlanId");
-
-                    b.HasOne("FamilyPlanner.Models.RecipeModel.Recipe", null)
-                        .WithMany()
-                        .HasForeignKey("RecipeId");
+                        .HasForeignKey("PlannedDayId");
 
                     b.HasOne("FamilyPlanner.Models.RecipeModel.Recipe", "Recipe")
                         .WithMany()
-                        .HasForeignKey("RecipeId1");
+                        .HasForeignKey("RecipeId");
+
+                    b.Navigation("PlannedDay");
 
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("FamilyPlanner.Models.PlanModel.Plan", b =>
+            modelBuilder.Entity("FamilyPlanner.Models.PlannedDayModel.PlannedDay", b =>
                 {
-                    b.HasOne("FamilyPlanner.Models.UserModel.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserUid")
-                        .HasPrincipalKey("Uid");
+                    b.HasOne("FamilyPlanner.Models.FamilyModel.Family", "Family")
+                        .WithMany("PlannedDays")
+                        .HasForeignKey("FamilyId");
 
-                    b.HasOne("FamilyPlanner.Models.WeeklyPlannerModel.WeeklyPlanner", null)
-                        .WithMany("Plans")
-                        .HasForeignKey("WeeklyPlannerId");
+                    b.HasOne("FamilyPlanner.Models.UserModel.User", "User")
+                        .WithMany("PlannedDays")
+                        .HasForeignKey("UserUid")
+                        .HasPrincipalKey("Uid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Family");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.PlannedTaskModel.PlannedTask", b =>
+                {
+                    b.HasOne("FamilyPlanner.Models.UserModel.User", "AssignedTo")
+                        .WithMany("AssignedTasks")
+                        .HasForeignKey("AssignedToId");
+
+                    b.HasOne("FamilyPlanner.Models.FamilyModel.Family", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId");
+
+                    b.HasOne("FamilyPlanner.Models.PlannedDayModel.PlannedDay", "PlannedDay")
+                        .WithMany("PlannedTasks")
+                        .HasForeignKey("PlannedDayId");
+
+                    b.Navigation("AssignedTo");
+
+                    b.Navigation("Family");
+
+                    b.Navigation("PlannedDay");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.RecipeModel.Recipe", b =>
@@ -368,35 +792,35 @@ namespace backend.Migrations
 
             modelBuilder.Entity("FamilyPlanner.Models.ShoppingListModel.ShoppingList", b =>
                 {
-                    b.HasOne("FamilyPlanner.Models.PlanModel.Plan", null)
+                    b.HasOne("FamilyPlanner.Models.PlannedDayModel.PlannedDay", "PlannedDay")
                         .WithMany("ShoppingLists")
-                        .HasForeignKey("PlanId");
+                        .HasForeignKey("PlannedDayId");
+
+                    b.Navigation("PlannedDay");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.ShoppingListModel.ShoppingListItem", b =>
                 {
-                    b.HasOne("FamilyPlanner.Models.ShoppingListModel.ShoppingList", null)
+                    b.HasOne("FamilyPlanner.Models.ShoppingListModel.ShoppingList", "ShoppingList")
                         .WithMany("Items")
                         .HasForeignKey("ShoppingListId");
+
+                    b.Navigation("ShoppingList");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.TaskModel.TaskItem", b =>
                 {
                     b.HasOne("FamilyPlanner.Models.UserModel.User", "AssignedUser")
                         .WithMany()
-                        .HasForeignKey("AssignedUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssignedUserId");
 
-                    b.HasOne("FamilyPlanner.Models.PlanModel.Plan", "Plan")
-                        .WithMany("Tasks")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("FamilyPlanner.Models.PlannedTaskModel.PlannedTask", "PlannedTask")
+                        .WithMany()
+                        .HasForeignKey("PlannedTaskId");
 
                     b.Navigation("AssignedUser");
 
-                    b.Navigation("Plan");
+                    b.Navigation("PlannedTask");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.UserModel.User", b =>
@@ -405,21 +829,17 @@ namespace backend.Migrations
                         .WithMany("Users")
                         .HasForeignKey("ActivityId");
 
-                    b.HasOne("FamilyPlanner.Models.PlanModel.Plan", null)
-                        .WithMany("ForUsers")
-                        .HasForeignKey("PlanId");
-                });
+                    b.HasOne("FamilyPlanner.models.Image", "ProfileImage")
+                        .WithOne("User")
+                        .HasForeignKey("FamilyPlanner.Models.UserModel.User", "ProfileImageId");
 
-            modelBuilder.Entity("FamilyPlanner.Models.WeeklyPlannerModel.WeeklyPlanner", b =>
-                {
-                    b.HasOne("FamilyPlanner.Models.FamilyModel.Family", null)
-                        .WithMany("WeeklyPlanners")
-                        .HasForeignKey("FamilyId");
+                    b.HasOne("FamilyPlanner.Models.FamilyModel.Family", "SelectedFamily")
+                        .WithMany()
+                        .HasForeignKey("SelectedFamilyId");
 
-                    b.HasOne("FamilyPlanner.Models.UserModel.User", null)
-                        .WithMany("WeeklyPlanners")
-                        .HasForeignKey("UserUid")
-                        .HasPrincipalKey("Uid");
+                    b.Navigation("ProfileImage");
+
+                    b.Navigation("SelectedFamily");
                 });
 
             modelBuilder.Entity("UserFamily", b =>
@@ -444,20 +864,27 @@ namespace backend.Migrations
 
             modelBuilder.Entity("FamilyPlanner.Models.FamilyModel.Family", b =>
                 {
-                    b.Navigation("WeeklyPlanners");
+                    b.Navigation("PlannedDays");
                 });
 
-            modelBuilder.Entity("FamilyPlanner.Models.PlanModel.Plan", b =>
+            modelBuilder.Entity("FamilyPlanner.Models.KassalappModel.KassalappModel", b =>
+                {
+                    b.Navigation("Allergens");
+
+                    b.Navigation("Nutritions");
+
+                    b.Navigation("PriceHistory");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.Models.PlannedDayModel.PlannedDay", b =>
                 {
                     b.Navigation("Activities");
 
-                    b.Navigation("ForUsers");
-
                     b.Navigation("Meals");
 
-                    b.Navigation("ShoppingLists");
+                    b.Navigation("PlannedTasks");
 
-                    b.Navigation("Tasks");
+                    b.Navigation("ShoppingLists");
                 });
 
             modelBuilder.Entity("FamilyPlanner.Models.ShoppingListModel.ShoppingList", b =>
@@ -465,14 +892,29 @@ namespace backend.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("FamilyPlanner.Models.UserModel.User", b =>
+            modelBuilder.Entity("FamilyPlanner.Models.ShoppingListModel.ShoppingListItem", b =>
                 {
-                    b.Navigation("WeeklyPlanners");
+                    b.Navigation("Allergens");
+
+                    b.Navigation("Nutritions");
+
+                    b.Navigation("PriceHistory");
                 });
 
-            modelBuilder.Entity("FamilyPlanner.Models.WeeklyPlannerModel.WeeklyPlanner", b =>
+            modelBuilder.Entity("FamilyPlanner.Models.UserModel.User", b =>
                 {
-                    b.Navigation("Plans");
+                    b.Navigation("AssignedTasks");
+
+                    b.Navigation("PlannedDays");
+
+                    b.Navigation("ReceivedInvites");
+
+                    b.Navigation("SentInvites");
+                });
+
+            modelBuilder.Entity("FamilyPlanner.models.Image", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

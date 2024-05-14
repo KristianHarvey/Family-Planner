@@ -12,14 +12,31 @@ namespace FamilyPlanner.Managers {
         public MealManager(DatabaseContext context) {
             database = context;
         }
-        public async Task<Meal> CreateAsync(MealInput newMeal)
+        public async Task<Meal> CreateAsync(Meal newMeal)
         {
             Meal meal = new()
             {
                 Name = newMeal.Name,
                 Description = newMeal.Description ?? "",
                 RecipeId = newMeal.RecipeId,
-                Recipe = newMeal.Recipe
+            };
+            database.Meals.Add(meal);
+            try {
+                await database.SaveChangesAsync();
+            } catch(DbUpdateException) {
+                throw;
+            }
+            return meal;
+        }
+
+        public async Task<Meal> CreateForPlannedDay(Meal newMeal, int plannedDayId)
+        {
+            Meal meal = new()
+            {
+                Name = newMeal.Name,
+                Description = newMeal.Description ?? "",
+                RecipeId = newMeal.RecipeId,
+                PlannedDayId = plannedDayId
             };
             database.Meals.Add(meal);
             try {
@@ -48,7 +65,12 @@ namespace FamilyPlanner.Managers {
             return meal;
         }
 
-        public async Task<bool> UpdateAsync(int id, MealUpdate meal)
+        public void RemoveForPlannedDay(List<Meal> meals)
+        {
+            database.Meals.RemoveRange(meals);
+        }
+
+        public async Task<bool> UpdateAsync(int id, Meal meal)
         {
             var existingMeal = await GetByIdAsync(id);
             bool success;
@@ -58,8 +80,6 @@ namespace FamilyPlanner.Managers {
                 existingMeal.Name = meal.Name;
                 existingMeal.Description = meal.Description ?? "";
                 existingMeal.RecipeId = meal.RecipeId;
-                existingMeal.Recipe = meal.Recipe;
-                database.Meals.Update(existingMeal);
             }
             try {
                 await database.SaveChangesAsync();

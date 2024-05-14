@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "angular-rhythm-422608-a2",
+  "private_key_id": "918cdf26a7132e9d26b466745d639836889e8888",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCSMSPZ50VSKQxG\neg+kbu/Uq0rZ7rX37F1SYcgec98aQZ4HhbqJslJiyMHDRsg5DlMhGKt73/3rb5jE\nbUvtWivCL/YeNjxQBgBcIFOgS3y91FPE+H5Y8uTGOh6qmSedv3n35L7uW5uIhQER\nZByjU8qSyLoavrCYGdx6A2z8ZKWEw76de5rIy4yyTC26kxI3f5H+fTsIuPCOEIxB\nzXCZ/jrajSorhhLHYGe1LKU3c5gKE9UhI3X2FDsmVkf2+YFTzZ+w8kuddoADNnBr\npDbREjzKflFOUXQvhtkSzujPRvS09OPDjIrFbBESKw8oWqAUNtKGhoX6P64Fzz+X\nQ5NwhXw/AgMBAAECggEAIqYs9h9/aZq7AxU5EeMNSt2SbxbJ4EoQUE9GrBkQftug\nhe3nKW2vYyRr8EmdeRBxGX4MXt7XAu8/SQcSoN3nUy4k6kI2h0z01uD+kRZzKVbi\nx+ORpqljGax6yjpkjlnsoZmAu2PQ+El12FZfB0L711Bl86LQniw6+lxHf4anSFD0\n0PmJZnGABpG1k0DSPgzZInSiM3ZIFE0R2QYKaK7Z/yUaVDnFFLawzk9RfrUXLnR5\nuLi5UirEI56z+IBHeD1hAvoQF19YGdYbF/vE522VZH4McvJN1eO0eJjPfw9FHEeH\ncWrMs7oqMUWmUvFXp5Fpi38XwcO59OCqixo28hBtuQKBgQDLmAz1iHdLnt7bOnrv\n2eAex1FeUeMPe2fAPJnNkDMQUysVNqIw0V2scq93ky8/N6clrzFAY+PWEw2jXSpO\ni6Wxi5mMKzVLASqt35+2qspaokwVbfIxeRBh76Y/EpDtZtM1j0diM1W1PY62NByj\nwVRUtTBC/qI1oPUMA9Td7xZIywKBgQC30oymvCLm+Q/OdHO+gluLjZGa9AnAqVwK\n0/mEgOGeW47zsURO5IcuWMkoutpThcbiFo0pzi24SB/kYQtncluxbIK1GwNtpn2H\nm/k2gk2KFMH/vLpJ+kow/TLH5kvruS6Oh0wxpJ09qbrLa+7VdoQA+bBCrA2cpG0K\nZMMbjTZP3QKBgQCeNQ7E8gG52r/U3hHQNp+Ja1uYjsuCKWRLJwxhiA+WPPq6plTM\n2LURH6GoqtBJMMcLaqM8JSNUJEQx0WDh3nSojhGIsb7dBRAUQzUKLpfGbF3xPRm6\nRhhr8l1en9/NC11PPoK7Fachiq9OeRpUShRtKstRFCwavnQNnSCaQYMwlwKBgAXN\not0csWljUYluCb1o9iToukEPFUO81QgOeyEgxH6wW0n8PbDT7CSdbvRXOc9LOOUo\nWxqHxM+9jywxmB+S76whRdsb2Dbc+7eNSAfdgz8pupotRiBRw4faZoEDF0CA3yRm\nxxQGI2Sv+BK1/JtGm5JAT707G07nrf2XAsXa5m0NAoGAD/wLzTEsBqeWfjV0obw+\nfwtQVLTTchlj30+tQlVD1B+Fp8Biodws7g6iXrdf/6H9iscTr8kPGyntv/tIE++1\nCvbWYZusLytN1rk3Vwvgjqdlx7D9X5zN7qe/ROY9KGKZZdHWmMA7wWsZsJ6iPwAg\ncErL9v+Egf9KFodyI7z3+40=\n-----END PRIVATE KEY-----\n",
+  "client_email": "kristianharvey@angular-rhythm-422608-a2.iam.gserviceaccount.com",
+  "client_id": "104920202026513055378",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kristianharvey%40angular-rhythm-422608-a2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

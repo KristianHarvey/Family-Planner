@@ -1,10 +1,11 @@
 
+using FamilyPlanner.Models.PlannedDayModel;
 using FamilyPlanner.Models.UserModel;
-using FamilyPlanner.Models.WeeklyPlannerModel;
 
 namespace FamilyPlanner.Models.FamilyModel {
     public sealed class FamilyUpdate {
+        public string Name { get; set; }
         public List<User>? Members { get; set; }
-        public List<WeeklyPlanner>? WeeklyPlanners { get; set; }
+        public List<PlannedDay>? PlannedDays { get; set; }
     }
 }

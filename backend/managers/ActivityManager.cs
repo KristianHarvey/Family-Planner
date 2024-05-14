@@ -1,5 +1,6 @@
 
 
+using FamilyPlanner.Context;
 using FamilyPlanner.Db;
 using FamilyPlanner.Managers.Interfaces;
 using FamilyPlanner.Models.ActivityModel;
@@ -9,17 +10,22 @@ using Microsoft.EntityFrameworkCore.Storage;
 namespace FamilyPlanner.Managers {
     public class ActivityManager : IActivityManager
     {
+        private readonly IContextService contextService;
         private readonly DatabaseContext database;
-        public ActivityManager(DatabaseContext context) {
+        public ActivityManager(DatabaseContext context, IContextService contextService) {
             database = context;
+            this.contextService = contextService;
         }
-        public async Task<Activity> CreateAsync(ActivityInput newActivity)
+        public async Task<Activity> CreateAsync(Activity newActivity)
         {
+            var currentUserUid = contextService.GetCurrentUserUid();
             Activity activity = new Activity()
             {
                 Name = newActivity.Name,
                 Description = newActivity.Description ?? "",
-                DayKey = newActivity.DayKey
+                UserUid = currentUserUid,
+                Users = newActivity.Users ?? [],
+                PlannedDayId = newActivity.PlannedDayId
                 
             };
             database.Activities.Add(activity);
@@ -31,17 +37,51 @@ namespace FamilyPlanner.Managers {
             return activity;
         }
 
-        public Task<IEnumerable<Activity>> GetAllAsync()
+        public async Task<Activity> CreateForPlannedDay(Activity newActivity, int plannedDayId)
         {
-            throw new NotImplementedException();
+            var currentUserUid = contextService.GetCurrentUserUid();
+            Activity activity = new Activity()
+            {
+                Name = newActivity.Name,
+                Description = newActivity.Description ?? "",
+                UserUid = currentUserUid,
+                Users = newActivity.Users ?? [],
+                PlannedDayId = plannedDayId
+                
+            };
+            database.Activities.Add(activity);
+            try {
+                await database.SaveChangesAsync();
+            } catch(DbUpdateException) {
+                throw;
+            }
+            return activity;
         }
 
-        public Task<Activity> GetByIdAsync(int id)
+        public async Task<IEnumerable<Activity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var activities = await database.Activities
+                .Include(a => a.Users)
+                .ToListAsync();
+            
+            return activities;
         }
 
-        public Task<bool> UpdateAsync(int id, ActivityUpdate activity)
+        public async Task<Activity> GetByIdAsync(int id)
+        {
+            var activity = await database.Activities
+                .Include(a => a.Users)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            return activity;
+        }
+
+        public void RemoveForPlannedDay(List<Activity> activities)
+        {
+            database.Activities.RemoveRange(activities);
+        }
+
+        public Task<bool> UpdateAsync(int id, Activity activity)
         {
             throw new NotImplementedException();
         }

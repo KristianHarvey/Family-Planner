@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Credentials, User } from "../models/user";
-import { AuthService } from "../api/authService";
+import { AuthService } from "../api/services/authService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TokenInfo } from "../models/tokenInfo";
+import { UserService } from "../api/services/userService";
 
 export interface AuthContextData {
     user?: User | null;
@@ -67,6 +68,9 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({childre
                     role: responseToken.role,
                     expiryDate: new Date(responseToken.expiryDate)
                 };
+
+                const userResponse = await UserService.getByUid(tokenInfo.userUid!);
+                setUser(userResponse.data);        
                 setUserUid(tokenInfo.userUid!);
                 setExpires(tokenInfo.expiryDate);
                 setRole(tokenInfo.role!);
@@ -86,14 +90,15 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({childre
         if(!expires) {
             return;
         }
-        // var currentDate = new Date();
-        // currentDate.setMinutes(currentDate.getMinutes() + 2)
+        // const currentDate = new Date();
+        // currentDate.setMinutes(currentDate.getMinutes() + 2);
         const timeUntilExpires = expires.getTime() - Date.now();
+
         const timer = setTimeout(async() => {
             const response = await AuthService.refreshToken();
             console.log("Response when refreshing token: ", response);
             if(response) {
-                await AsyncStorage.setItem("Token", response.data);
+                await AsyncStorage.setItem("Token", response.token!);
             }
             updateCredentials();
         }, timeUntilExpires)

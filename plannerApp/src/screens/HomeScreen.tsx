@@ -6,6 +6,7 @@ import BottomBar from "../components/bottomBar/BottomBar";
 import Icon from "react-native-vector-icons/Ionicons";
 import React from "react";
 import DisplayCard from "../components/displayCard/DisplayCard";
+import { TopBar } from "../components/topBar/TopBar";
 
 const HomeScreen = () => {
     const {colors} = useColor();
@@ -19,7 +20,8 @@ const HomeScreen = () => {
     }, []);
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: colors.background.main}}>
+            <TopBar/>
             <ScrollView 
             contentContainerStyle={{flex: 1, backgroundColor: colors.background.main}}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>

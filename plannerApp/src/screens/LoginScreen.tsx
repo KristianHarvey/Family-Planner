@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react"
 import { UserInput } from "../models/user"
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Padding } from "../constants/UIConstants";
+import { Font, FontSize, Padding } from "../constants/UIConstants";
 import { useColor } from "../hooks/useColor";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AuthService } from "../api/authService";
+import { AuthService } from "../api/services/authService";
 import { useAuth } from "../hooks/useAuth";
+import { Button } from "../components/button/Button";
+import { TopBar } from "../components/topBar/TopBar";
 
 export const LoginScreen = () => {
     const { colors } = useColor();
@@ -32,28 +34,80 @@ export const LoginScreen = () => {
         navigation.navigate("Register");
     }
     return (
-        <View>
-            <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
-            />
-            <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={true}
-            style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
-            />
-            <TouchableOpacity onPress={handleSubmit}
-            style={{ backgroundColor: colors.background.secondary, padding: 40}}>
-                <Text>Login</Text>
-            </TouchableOpacity>
-            <Text>Dont have an account?</Text>
-            <TouchableOpacity onPress={handleRegisterNavigation}>
-                <Text style={{color: colors.text.secondary}}>Create an account here!</Text>
+        <View style={{
+            flex: 1,
+            backgroundColor: colors.background.main,
+        }}
+        >
+            <TopBar 
+            leftText="avbryt" 
+            leftTextColor={colors.accent.main}
+            cameFromScreen="Startup" />
+            <View 
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+
+                <View style={{
+                    width: '90%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    shadowColor: '#000',
+                    shadowOpacity: 0.8,
+                    shadowRadius: 5,
+                    shadowOffset: {width: 0, height: 1},
+                    elevation: 3,
+
+                }}>
+                    <TextInput
+                    style={{ 
+                        width: '100%',
+                        backgroundColor: colors.textCard.main,
+                        color: colors.text.main,
+                        borderBottomWidth: 1,
+                        borderTopLeftRadius: Padding.Small,
+                        borderTopRightRadius: Padding.Small,
+                        fontFamily: Font.TitilliumWebRegular,
+                        fontSize: FontSize.Small,
+                    }}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    />
+                    <TextInput
+                    style={{ 
+                        width: '100%', 
+                        backgroundColor: colors.textCard.main,
+                        color: colors.text.main,
+                        borderBottomLeftRadius: Padding.Small,
+                        borderBottomRightRadius: Padding.Small,
+                        fontFamily: Font.TitilliumWebRegular,
+                        fontSize: FontSize.Small,
+                    }}
+                    placeholder="Passord"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry={true}
+                    />
+                </View>
+                <TouchableOpacity 
+                onPress={handleSubmit}
+                style={{ 
+                    marginTop: Padding.XLarge,
+                    width: '90%',
+                    borderRadius: Padding.Small,
+                    backgroundColor: colors.text.secondary, 
+                    padding: Padding.Large}}>
+                    <Text style={{
+                        fontFamily: Font.TitilliumWebRegular,
+                        fontSize: FontSize.Small,
+                        color: colors.text.main,
+                        textAlign: 'center'
+                    }}>Login</Text>
                 </TouchableOpacity>
+            </View>
         </View>
     )
 }

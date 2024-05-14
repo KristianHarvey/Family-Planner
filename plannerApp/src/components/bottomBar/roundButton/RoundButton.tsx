@@ -1,6 +1,6 @@
 import { Button, Text, TouchableOpacity, View } from "react-native"
 import { useColor } from "../../../hooks/useColor";
-import { Icon } from 'react-native-elements';
+import Feather from "react-native-vector-icons/Feather"
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
@@ -30,13 +30,13 @@ const RoundButton: React.FC<RoundButtonProps> = ( {size, selected = false, navig
                     backgroundColor: colors.text.secondary,
                     borderColor: selected ? colors.text.main : 'transparent',
                     justifyContent: 'center',
+                    alignItems: "center"
                 }}
                 {...rest}>
                     
-                    <Icon
+                    <Feather
                     name="plus"
-                    type='antdesign'
-                    size={50}
+                    size={60}
                     color={colors.text.main}/>
                 </View>
             </TouchableOpacity>

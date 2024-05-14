@@ -39,8 +39,7 @@ const BarItem: React.FC<BarItemProps> = ( {totalItems, iconName, iconComponent: 
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderTopWidth: 3,
-                borderColor: selected ? colors.text.main : 'transparent'
+                borderColor: selected ? colors.navbar.icons : 'transparent',
             }} onPress={handleNavigation}>
 
                 <IconComponent name={iconName} size={iconSize as number} color={color}/>

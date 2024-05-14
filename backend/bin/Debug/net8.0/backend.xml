@@ -4,16 +4,162 @@
         <name>backend</name>
     </assembly>
     <members>
-        <member name="T:backend.Migrations.ChangedMapping">
+        <member name="M:FamilyPlanner.Controllers.PlannedDayController.GetPlannedDayForCurrentUser(System.String)">
+            <summary>
+            Get Planned Day For Current User By Day Key
+            </summary>
+            <param name="dayKey"></param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedDayController.GetAllPlannedDaysForCurrentUser">
+            <summary>
+            Get All Planned Days For Current User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedDayController.GetAllPlannedDaysStored">
+            <summary>
+            Get All Planned Days Stored
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedDayController.GetPlannedDayById(System.Int32)">
+            <summary>
+            Get Planned Day By id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedDayController.DeletePlannedDayById(System.Int32)">
+            <summary>
+            Delete Planned Day By Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.CreateNewPlannedTask(FamilyPlanner.Models.PlannedTaskModel.PlannedTask)">
+            <summary>
+            Create New Planned Task
+            </summary>
+            <param name="plannedTask"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.GetPlannedTaskForPlannedDay(System.Int32)">
+            <summary>
+            Get Planned Tasks For Current User By PlannedId
+            </summary>
+            <param name="plannedDayId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.GetAllPlannedTasksForCurrentUser">
+            <summary>
+            Get All Planned Tasks For Current User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.GetAllPlannedTasksStored">
+            <summary>
+            Get All Planned Tasks Stored
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.GetPlannedTaskById(System.Int32)">
+            <summary>
+            Get Planned Task By id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.DeletePlannedDayById(System.Int32)">
+            <summary>
+            Delete Planned Task By Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Migrations.InitialCreate">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedMapping.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:backend.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedMapping.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:backend.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedMapping.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:backend.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ChangedShoppingListField">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListField.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListField.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListField.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ChangedShoppingListFieldAgain">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListFieldAgain.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListFieldAgain.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListFieldAgain.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ChangedShoppingList">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingList.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingList.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingList.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ChangedShoppingListItemABit">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListItemABit.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListItemABit.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedShoppingListItemABit.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ChangedFamilyModelAgain">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedFamilyModelAgain.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedFamilyModelAgain.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ChangedFamilyModelAgain.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.MadeUserUidForPlannedDayNotNull">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.MadeUserUidForPlannedDayNotNull.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.MadeUserUidForPlannedDayNotNull.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.MadeUserUidForPlannedDayNotNull.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

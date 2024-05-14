@@ -1,10 +1,10 @@
-
+import { Platform } from "react-native";
 
 export class Padding {
-    static Small = 4;
-    static Medium = 8;
-    static Large = 12;
-    static XLarge = 16;
+    static Small = Platform.OS === "ios" ? 8 : 4;
+    static Medium = Platform.OS === "ios" ? 16 : 8;;
+    static Large = Platform.OS === "ios" ? 12 : 24;
+    static XLarge = Platform.OS === "ios" ? 32 : 16;
 };
 export class FontSize {
     static Small = 16;

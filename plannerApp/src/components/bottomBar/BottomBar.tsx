@@ -8,6 +8,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useColor } from "../../hooks/useColor";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { useRoute } from "@react-navigation/native";
+import { Padding } from "../../constants/UIConstants";
 
 interface BottomBarProps extends BottomTabBarProps {
 
@@ -78,7 +79,8 @@ const BottomBar: React.FC<BottomBarProps> = ({state}) => {
     const bottomBarRightItems = [shoppingListIcon, userIcon];
 
     return (
-        <>
+        <View
+        style={{}}>
             <BarContainer>
                 {bottomBarLeftItems.map((item, index) => {
                     const isSelected = state.routes[state.index].name === item.navigateScreen;
@@ -99,24 +101,24 @@ const BottomBar: React.FC<BottomBarProps> = ({state}) => {
                     bottom: 25,
                     backgroundColor: 'none',
                 }}>
-                    <RoundButton navigateScreen="Create" selected={state.routes[state.index].name === "Create"} size={100}/>
+                    <RoundButton navigateScreen="Create" selected={state.routes[state.index].name === "Create"} size={80}/>
                 </View>
-                {bottomBarRightItems.map((item, index) => {
-                    const isSelected = state.routes[state.index].name === item.navigateScreen;
-                    const itemIcon = isSelected && item.selectedIcon ? item.selectedIcon : item;
+                    {bottomBarRightItems.map((item, index) => {
+                        const isSelected = state.routes[state.index].name === item.navigateScreen;
+                        const itemIcon = isSelected && item.selectedIcon ? item.selectedIcon : item;
 
-                    return (
-                    <BarItem key={index}
-                    selected={isSelected} 
-                    color={itemIcon.color} 
-                    iconComponent={itemIcon.iconComponent as React.ComponentType<{name: string, size: number, color: string}>} 
-                    totalItems={2} 
-                    iconName={itemIcon.name} 
-                    iconSize={itemIcon.size}
-                    navigateScreen={itemIcon.navigateScreen}/>
-                )})}
+                        return (
+                        <BarItem key={index}
+                        selected={isSelected} 
+                        color={itemIcon.color} 
+                        iconComponent={itemIcon.iconComponent as React.ComponentType<{name: string, size: number, color: string}>} 
+                        totalItems={2} 
+                        iconName={itemIcon.name} 
+                        iconSize={itemIcon.size}
+                        navigateScreen={itemIcon.navigateScreen}/>
+                    )})}
             </BarContainer>
-        </>
+        </View>
     );
 };
 

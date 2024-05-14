@@ -5,7 +5,8 @@ import { useColor } from "../hooks/useColor";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { User, UserInput } from "../models/user";
-import { UserService } from "../api/userService";
+import { UserService } from "../api/services/userService";
+import { TopBar } from "../components/topBar/TopBar";
 
 export const RegisterScreen = () => {
     const { colors } = useColor();
@@ -33,37 +34,54 @@ export const RegisterScreen = () => {
         navigation.navigate("Login");
     };
     return (
-        <View>
-            <TextInput
-            placeholder="Fornavn"
-            value={firstName}
-            onChangeText={setFirstName}
-            style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
-            />
-            <TextInput
-            placeholder="Etternavn"
-            value={LastName}
-            onChangeText={setLastName}
-            style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
-            />
-            <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
-            />
-            <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={true}
-            style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
-            />
+        <View style={{flex: 1, backgroundColor: colors.background.main}}>
+            <TopBar 
+            leftText="avbryt"
+            leftTextColor={colors.accent.main}
+            cameFromScreen="Startup"/>
+            <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <View
+                style={{
+                    width: '90%',
 
-        <TouchableOpacity onPress={handleSubmit}
-        style={{ backgroundColor: colors.background.secondary, padding: 40}}>
-            <Text>Registrer</Text>
-        </TouchableOpacity>
+                }}>
+                    <TextInput
+                    placeholder="Fornavn"
+                    value={firstName}
+                    onChangeText={setFirstName}
+                    style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
+                    />
+                    <TextInput
+                    placeholder="Etternavn"
+                    value={LastName}
+                    onChangeText={setLastName}
+                    style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
+                    />
+                    <TextInput
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
+                    />
+                    <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry={true}
+                    style={{ borderWidth: 1, padding: Padding.Medium, margin: Padding.Medium}}
+                    />
+
+                    <TouchableOpacity onPress={handleSubmit}
+                    style={{ backgroundColor: colors.background.secondary, padding: 40}}>
+                        <Text>Registrer</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </View>
   );
 };

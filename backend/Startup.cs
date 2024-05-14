@@ -9,7 +9,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using FamilyPlanner.Managers.Interfaces;
 using FamilyPlanner.Managers;
-using FamilyPlanner.Models.PlanModel;
+using FamilyPlanner.Services;
+using FamilyPlanner.Context;
+using FamilyPlanner.Services.Interfaces;
+using FamilyPlanner.Kassalapp;
 
 namespace FamilyPlanner
 {
@@ -21,11 +24,21 @@ namespace FamilyPlanner
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IContextService, ContextService>();
+            services.AddScoped<IImageManager, ImageManager>();
+            services.AddScoped<IInviteManager, InviteManager>();
             services.AddScoped<IActivityManager, ActivityManager>();
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<IMealManager, MealManager>();
-            services.AddScoped<IPlanManager, PlanManager>();
-            services.AddScoped<IWeeklyPlannerManager, WeeklyPlannerManager>();
+            services.AddScoped<IPlannedDayManager, PlannedDayManager>();
+            services.AddScoped<IPLannedDayService, PlannedDayService>();
+            services.AddScoped<IPlannedTaskManager, PlannedTaskManager>();
+            services.AddScoped<IFamilyManager, FamilyManager>();
+            services.AddScoped<IFamilyService, FamilyService>();
+            services.AddScoped<IShoppingListItemManager, ShoppingListItemManager>();
+            services.AddScoped<IShoppingListManager, ShoppingListManager>();
+            services.AddScoped<ITaskItemManager, TaskItemManager>();
+            services.AddScoped<IKassalappApi, KassalappApi>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAuthentication(options =>
@@ -73,6 +86,9 @@ namespace FamilyPlanner
             });
 
             services.AddHttpClient();
+            // services.AddHttpsRedirection(options => {
+            //     options.HttpsPort = 443;
+            // });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
@@ -91,11 +107,16 @@ namespace FamilyPlanner
             //     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "images")),
             //     RequestPath = "/images"
             // });
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "images")),
+                RequestPath = "/images" // URL prefix for accessing the static files
+            });
+            // app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("AllowFrontend");
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
