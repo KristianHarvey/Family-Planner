@@ -1,7 +1,7 @@
 import { ActivityIndicator, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { useColor } from "../../hooks/useColor";
 import { useAuth } from "../../hooks/useAuth";
-import { TopBar } from "../../components/topBar/TopBar";
+import { TopBar } from "../../components/common/topBar/TopBar";
 import { Button } from "../../components/button/Button";
 import { FamilyService } from "../../api/services/familyService";
 import React, { useEffect } from "react";
@@ -9,7 +9,6 @@ import { User } from "../../models/user";
 import { UserService } from "../../api/services/userService";
 import { useNavigate } from "../../hooks/useNavigation";
 import { Font, FontSize, Padding } from "../../constants/UIConstants";
-import { InviteCard } from "../../components/inviteCard/InviteCard";
 import { Invite, inviteStatus } from "../../models/invite";
 import { Family } from "../../models/family";
 import { CustomSelect } from "../../components/customSelect/CustomSelect";
@@ -22,6 +21,7 @@ import { TodayTasksWidget } from "../../components/widget/todayTasks/TodayTasksW
 import { PlannedDay } from "../../models/plannedDay";
 import { DayKeyUtils } from "../../utils/DayKeyUtils";
 import { PlannedDayService } from "../../api/services/plannedDayService";
+import { InviteCard } from "../../components/invite/inviteCard/InviteCard";
 
 interface ProfileScreenProps {
     family: Family;
@@ -77,8 +77,11 @@ const ProfileScreen = () => {
 
 
     const fetchUserInfo = async () => {
-        auth.updateCredentials();
-        setCurrentUser(auth.user);
+        const response = await UserService.getCurrentUser();
+        if(response) {
+            setCurrentUser(response.data);
+
+        }
     };
 
     const fetchInvites = async () => {
@@ -168,7 +171,7 @@ const ProfileScreen = () => {
                 }}
                 contentContainerStyle={{flexGrow: 1, backgroundColor: colors.background.main}}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
-                <ProfileBase canUploadPicture={false}/>
+                <ProfileBase currentUser={currentUser} canUploadPicture={false}/>
                 <TodayTasksWidget plannedDay={plannedDay}/>
                     <View style={{flex: 1, backgroundColor: colors.background.main}}>
                         <CustomCard text="Familie">

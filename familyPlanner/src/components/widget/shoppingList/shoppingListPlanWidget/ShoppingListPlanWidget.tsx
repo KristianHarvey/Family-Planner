@@ -8,7 +8,6 @@ import { Button } from "../../../button/Button";
 import WeekCalendar from "../../../weekCalendar/WeekCalendar";
 import { DayKeyUtils } from "../../../../utils/DayKeyUtils";
 import { format } from "date-fns";
-import { DateData } from "react-native-calendars";
 
 interface Props {
     shoppingList?: ShoppingList;
@@ -32,6 +31,15 @@ export const ShoppingListPlanWidget: React.FC<Props> = ({
         }
     }
 
+    const handlePlanningState = () => {
+        const today = DayKeyUtils.getDayKey(new Date());
+        setSelectedDay(today); // Set selectedDay to today's date
+        if(onPlannedDayRequest) {
+            onPlannedDayRequest(today); // Pass today's date to onPlannedDayRequest
+        }
+        setPlanningState(true);
+    }
+
     React.useEffect(() => {
         console.log("Selected day: ", selectedDay);
     }, [selectedDay])
@@ -48,7 +56,7 @@ export const ShoppingListPlanWidget: React.FC<Props> = ({
             </Text>
             <View style={{padding: Padding.Medium}}/>
             {!planingState ? (
-                <Button title="Planlegg" onPress={() => setPlanningState(!planingState)}/>
+                <Button title="Planlegg" onPress={handlePlanningState}/>
 
             ): (
                 <View>

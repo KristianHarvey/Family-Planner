@@ -1,6 +1,6 @@
 import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useColor } from "../hooks/useColor"
-import { TopBar } from "../components/topBar/TopBar";
+import { TopBar } from "../components/common/topBar/TopBar";
 import React, { useEffect } from "react";
 import { Font, Padding } from "../constants/UIConstants";
 import { useRoute } from "@react-navigation/native";

@@ -29,7 +29,7 @@ namespace FamilyPlanner.Managers {
                 UserUid = currentUserUid,
                 Members = newFamily.Members,
                 PlannedDays = newFamily.PlannedDays,
-                FamilyColor = newFamily.FamilyColor
+                FamilyColor = newFamily.FamilyColor ?? "#303030"
             };
             database.Families.Add(family);
             try {

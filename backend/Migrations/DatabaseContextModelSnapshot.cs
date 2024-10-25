@@ -23,12 +23,18 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Completed")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("FamilyId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -44,6 +50,8 @@ namespace backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FamilyId");
 
                     b.HasIndex("PlannedDayId");
 
@@ -311,7 +319,6 @@ namespace backend.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("UserUid")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -330,6 +337,9 @@ namespace backend.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("AssignedToId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Completed")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -431,6 +441,9 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Completed")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("TEXT");
 
@@ -451,6 +464,8 @@ namespace backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FamilyId");
 
                     b.HasIndex("PlannedDayId");
 
@@ -618,6 +633,9 @@ namespace backend.Migrations
                     b.Property<string>("FileType")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ObjectName")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Uri")
                         .HasColumnType("TEXT");
 
@@ -649,9 +667,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("FamilyPlanner.Models.ActivityModel.Activity", b =>
                 {
+                    b.HasOne("FamilyPlanner.Models.FamilyModel.Family", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId");
+
                     b.HasOne("FamilyPlanner.Models.PlannedDayModel.PlannedDay", "PlannedDay")
                         .WithMany("Activities")
                         .HasForeignKey("PlannedDayId");
+
+                    b.Navigation("Family");
 
                     b.Navigation("PlannedDay");
                 });
@@ -751,9 +775,7 @@ namespace backend.Migrations
                     b.HasOne("FamilyPlanner.Models.UserModel.User", "User")
                         .WithMany("PlannedDays")
                         .HasForeignKey("UserUid")
-                        .HasPrincipalKey("Uid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasPrincipalKey("Uid");
 
                     b.Navigation("Family");
 
@@ -792,9 +814,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("FamilyPlanner.Models.ShoppingListModel.ShoppingList", b =>
                 {
+                    b.HasOne("FamilyPlanner.Models.FamilyModel.Family", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId");
+
                     b.HasOne("FamilyPlanner.Models.PlannedDayModel.PlannedDay", "PlannedDay")
                         .WithMany("ShoppingLists")
                         .HasForeignKey("PlannedDayId");
+
+                    b.Navigation("Family");
 
                     b.Navigation("PlannedDay");
                 });

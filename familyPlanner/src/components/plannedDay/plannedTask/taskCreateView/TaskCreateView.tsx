@@ -3,19 +3,15 @@ import { User } from "../../../../models/user";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useColor } from "../../../../hooks/useColor";
 import { Font, FontSize, Padding } from "../../../../constants/UIConstants";
-import { TextInputField } from "../../../textInputField/TextInputField";
 import { Button } from "../../../button/Button";
-import { CustomCard } from "../../../customCard/CustomCard";
-import { TaskItem, TaskItemInput } from "../../../../models/task";
 import { DayKeyUtils } from "../../../../utils/DayKeyUtils";
 import IonIcons from "react-native-vector-icons/Ionicons";
 import { CustomCardWithoutText } from "../../../customCard/CustomCardWithoutText";
-import { TaskDatePicker } from "../taskDatePicker/TaskDatePicker";
-import { format } from "date-fns";
 import { PlannedDayUtility } from "../../../../utils/PlannedDayUtils";
 import { TaskDatePickerV2 } from "../taskDatePickerV2/TaskDatePickerV2";
 import Feather from "react-native-vector-icons/Feather"
 import { PlannedTask, PlannedTaskInput } from "../../../../models/plannedTask";
+import { TextInputField } from "../../../atoms/textInputField/TextInputField";
 
 interface TaskCreateViewProps {
     onNameChange?: (name: string) => void;
@@ -137,7 +133,7 @@ export const TaskCreateView: React.FC<TaskCreateViewProps> = ({tasks, onTaskRemo
                         </View>
                     </View>
                     <View>
-                    <TextInput
+                    <TextInputField
                     style={{
                         borderRadius: 5,
                         borderWidth: 0.5,
@@ -148,6 +144,7 @@ export const TaskCreateView: React.FC<TaskCreateViewProps> = ({tasks, onTaskRemo
                         fontFamily: Font.TitilliumWebRegular
                     }}
                     value={name}
+                    clearButton
                     placeholder="Oppgave navn"
                     onChangeText={handleNameChange}
                     placeholderTextColor={colors.text.main}

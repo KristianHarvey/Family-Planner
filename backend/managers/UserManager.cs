@@ -2,6 +2,7 @@
 
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using AutoMapper;
 using FamilyPlanner.Context;
 using FamilyPlanner.Db;
 using FamilyPlanner.Managers.Interfaces;
@@ -23,12 +24,20 @@ namespace FamilyPlanner.Managers {
         private readonly IInviteManager inviteManager;
         private readonly IFamilyManager familyManager;
         private readonly IPlannedDayManager plannedDayManager;
-        public UserManager(DatabaseContext context, IContextService contextService, IInviteManager inviteManager, IFamilyManager familyManager, IPlannedDayManager plannedDayManager) {
+        private readonly IMapper mapper;
+        public UserManager(DatabaseContext context, 
+        IContextService contextService, 
+        IInviteManager inviteManager, 
+        IFamilyManager familyManager, 
+        IPlannedDayManager plannedDayManager, 
+        IMapper mapper
+        ) {
             database = context;
             this.inviteManager = inviteManager;
             this.contextService = contextService;
             this.familyManager = familyManager;
             this.plannedDayManager = plannedDayManager;
+            this.mapper = mapper;
         }
         public async Task<User> CreateUserAsync(UserInput newUser)
         {
@@ -77,7 +86,7 @@ namespace FamilyPlanner.Managers {
         public async Task<User> GetByEmailAsync(string email)
         {
             Console.WriteLine(email);
-            var user = await database.Users
+            var userDB = await database.Users
                 .Include(u => u.Families)
                 .Include(u => u.PlannedDays)
                 .Include(u => u.SentInvites)
@@ -85,6 +94,8 @@ namespace FamilyPlanner.Managers {
                 .Include(u => u.ProfileImage)
                 .Include(u => u.SelectedFamily)
                 .FirstOrDefaultAsync(u => u.Email == email);
+
+            var user = mapper.Map<User>(userDB);
             return user;
         }
         public async Task<List<Invite>> GetAllInvites() {
@@ -268,7 +279,6 @@ namespace FamilyPlanner.Managers {
                 .Include(u => u.ProfileImage)
                 .Include(u => u.SelectedFamily)
                 .FirstOrDefaultAsync(u => u.Id == id);
-            
             return user;
         }
 
@@ -312,6 +322,24 @@ namespace FamilyPlanner.Managers {
             }
             return true;
         }
+
+        public async Task<IEnumerable<User>> Search(string query) {
+            var resultsDB = await database.Users
+                .Where(u => u.FirstName.Contains(query) || 
+                u.LastName.Contains(query) || 
+                u.Email.Contains(query))
+                .Select(u => new {
+                    User = u,
+                    RelevanceScore = (u.FirstName.Contains(query) ? 3 : 0) + (u.LastName.Contains(query) ? 2 : 0) + (u.Email.Contains(query) ? 1 : 0)
+                })
+                .OrderByDescending(r => r.RelevanceScore)
+                .Select(u => u.User)
+                .Take(10)
+                .Include(u => u.ProfileImage)
+                .Include(u => u.Families)
+                .ToListAsync();
+            return resultsDB;
+        }
         public async Task<bool> UpdateAsync(int id, User user)
         {
             var existingUser = await GetByIdAsync(id);
@@ -329,17 +357,28 @@ namespace FamilyPlanner.Managers {
             if(user.PlannedDays != null) {
                 foreach(var plannedDay in user.PlannedDays) {
                     var updatedPlannedDay = await plannedDayManager.CreateUpdateAsync(plannedDay.DayKey, plannedDay);
-                    updatedPlannedDays.Append(updatedPlannedDay);
+                    updatedPlannedDays.Add(updatedPlannedDay);
                 }
-
             }
             existingUser.PlannedDays = updatedPlannedDays;
-            existingUser.FirstName = user.FirstName;
-            existingUser.LastName = user.LastName;
-            existingUser.Families = user.Families;
-            existingUser.SentInvites = user.SentInvites;
-            existingUser.ReceivedInvites = user.ReceivedInvites;
-            existingUser.SelectedFamilyId = user.SelectedFamilyId;
+            if(!string.IsNullOrEmpty(user.FirstName)) {
+                existingUser.FirstName = user.FirstName;
+            }
+            if(!string.IsNullOrEmpty(user.LastName)) {
+                existingUser.LastName = user.LastName;
+            }
+            if(user.SentInvites != null && user.SentInvites.Count > 0) {
+                existingUser.SentInvites = user.SentInvites;
+                
+            }
+            if(user.ReceivedInvites != null && user.ReceivedInvites.Count > 0) {
+                existingUser.ReceivedInvites = user.ReceivedInvites;
+            
+            }
+            if(user.SelectedFamilyId != null && user.SelectedFamilyId != 0) {
+                existingUser.SelectedFamilyId = user.SelectedFamilyId;
+
+            }
 
             try {
                 await database.SaveChangesAsync();
@@ -347,6 +386,13 @@ namespace FamilyPlanner.Managers {
                 throw;
             }
             return true;
+        }
+
+        public async Task<User> GetCurrentUserFromToken()
+        {
+            var userUid = contextService.GetCurrentUserUid();
+
+            return await GetByUidAsync(userUid);
         }
     }
 }

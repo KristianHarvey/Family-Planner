@@ -2,7 +2,7 @@ import Feather from "react-native-vector-icons/Feather";
 import IonIcons from "react-native-vector-icons/Ionicons";
 import { useColor } from "../../hooks/useColor";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import { TopBar } from "../../components/topBar/TopBar";
+import { TopBar } from "../../components/common/topBar/TopBar";
 import { SettingsCard } from "../../components/profile/settingsCard/SettingsCard";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "../../hooks/useNavigation";

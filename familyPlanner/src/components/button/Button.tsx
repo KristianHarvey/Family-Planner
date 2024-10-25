@@ -9,6 +9,7 @@ interface ButtonProps extends PropsWithChildren<TouchableOpacityProps> {
     title: string;
     color?: string;
     textColor?: string;
+    rightIcon?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ( {title, color, textColor, children, ...rest} ) => {
@@ -21,9 +22,7 @@ export const Button: React.FC<ButtonProps> = ( {title, color, textColor, childre
                     backgroundColor: color ?? colors.background.contrast,
                     alignItems: "center",
                     justifyContent: "center",
-                    marginHorizontal: 10, // Adjust horizontal margin
                     borderRadius: 5, // Adjust border radius
-                    paddingHorizontal: Padding.XLarge * 2, // Adjust horizontal padding
             }}>
 
             

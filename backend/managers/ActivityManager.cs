@@ -25,8 +25,8 @@ namespace FamilyPlanner.Managers {
                 Description = newActivity.Description ?? "",
                 UserUid = currentUserUid,
                 Users = newActivity.Users ?? [],
-                PlannedDayId = newActivity.PlannedDayId
-                
+                PlannedDayId = newActivity.PlannedDayId,
+                Completed = false
             };
             database.Activities.Add(activity);
             try {
@@ -46,8 +46,8 @@ namespace FamilyPlanner.Managers {
                 Description = newActivity.Description ?? "",
                 UserUid = currentUserUid,
                 Users = newActivity.Users ?? [],
-                PlannedDayId = plannedDayId
-                
+                PlannedDayId = plannedDayId,
+                Completed = false
             };
             database.Activities.Add(activity);
             try {

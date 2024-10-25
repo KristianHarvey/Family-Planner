@@ -26,8 +26,8 @@ export class PlannedTaskService {
             throw error;
         }
     }
-    public static async getPlannedTasksForCurrentUser() {
-        const url = baseUrl + `PlannedTask/user`;
+    public static async getPlannedTasksForCurrentUser(limit?: number, page?: number) {
+        const url = baseUrl + `PlannedTask/user?${limit}&page=${page}`;
 
         try {
             const response = await axiosInstance.get(url);

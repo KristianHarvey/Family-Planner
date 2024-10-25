@@ -6,10 +6,12 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { User, UserInput } from "../models/user";
 import { UserService } from "../api/services/userService";
-import { TopBar } from "../components/topBar/TopBar";
+import { TopBar } from "../components/common/topBar/TopBar";
+import { useAuth } from "../hooks/useAuth";
 
 export const RegisterScreen = () => {
     const { colors } = useColor();
+    const auth = useAuth();
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
     const [firstName, setFirstName] = useState('');
     const [LastName, setLastName] = useState('');
@@ -28,7 +30,16 @@ export const RegisterScreen = () => {
             };
             console.log(user);
             const response = await UserService.createUser(user);
-            console.log(response);
+            if(response.statusCode == 200) {
+                try {
+                    auth.login({
+                        email: email,
+                        password: password
+                    });
+                } catch(error) {
+                    console.error("Failed to login after register: ", error);
+                }
+            }
         } catch(error) {
             console.error("Failed creating user", error);
             throw error;

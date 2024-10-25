@@ -6,7 +6,7 @@ namespace FamilyPlanner.Managers.Interfaces {
        public Task<ShoppingList> CreateAsync(ShoppingList newShoppingList);
        public Task<ShoppingList> CreateUpdateAsync(ShoppingList shoppingList);
        public Task<ShoppingList> CreateForPlannedDay(ShoppingList newPlannedTask, int plannedDayId);
-        public Task<IEnumerable<ShoppingList>> GetAllAsync();
+        public Task<IEnumerable<ShoppingList>> GetAllAsync(int limit, int page);
         public Task<IEnumerable<ShoppingList>> GetAllStoredAsync();
         public Task<ShoppingList> GetByIdAsync(int id);
         public Task<ShoppingList> UpdateAsync(int id, ShoppingList shoppingList);

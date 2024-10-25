@@ -22,8 +22,8 @@ namespace FamilyPlanner.Controllers {
             return new APIResponse(createdShoppingList, "Successfully created a new shopping list", false, HttpStatusCode.OK);
         }
         [HttpGet]
-        public async Task<APIResponse> GetAllForCurrentUser() {
-            var shoppingLists = await shoppingListManager.GetAllAsync();
+        public async Task<APIResponse> GetAllForCurrentUser(int limit = 20, int page = 0) {
+            var shoppingLists = await shoppingListManager.GetAllAsync(limit, page);
             if(shoppingLists == null) {
                 return new APIResponse("No shopping lists exists for current user", true, HttpStatusCode.NotFound);
             }

@@ -21,18 +21,22 @@ namespace FamilyPlanner.Services {
             var user = await userManager.GetByUidAsync(currentUserUid);
             var newFamily = AddUserToFamilyInitial(family, user);
             var createdFamily = await familyManager.CreateAsync(newFamily);
-            if(user == null) {
-                return null;
+            Console.WriteLine($"Updating user {user.Id} selected family: {createdFamily.Id}");
+
+            Console.WriteLine("Users has so many families: ", user.Families!.Count);
+
+            if(user!.Families == null) {
+                user.Families = new List<Family>();
             }
-            if(user.Families == null || user.Families.Count <= 0 || user.SelectedFamilyId == 0) {
-                if(!await userManager.UpdateSelectedFamily(user.Id, createdFamily.Id)) {
+            if (user != null && (user.Families!.Count <= 0 || user.SelectedFamilyId == 0 || user.SelectedFamily == null))
+            {
+                Console.WriteLine($"Updating user {user.Id} selected family: {createdFamily.Id}");
+                if (!await userManager.UpdateSelectedFamily(user.Id, createdFamily.Id))
+                {
                     return null;
                 }
             }
-            if(user.Families == null) {
-                user.Families = new List<Family>();
-            }
-            user.Families.Add(createdFamily);
+            user!.Families.Add(createdFamily);
             if(!await userManager.UpdateAsync(user.Id, user)) {
                 return null;
             }

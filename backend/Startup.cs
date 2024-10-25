@@ -40,6 +40,7 @@ namespace FamilyPlanner
             services.AddScoped<ITaskItemManager, TaskItemManager>();
             services.AddScoped<IKassalappApi, KassalappApi>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddAuthentication(options =>
             {
@@ -87,7 +88,7 @@ namespace FamilyPlanner
 
             services.AddHttpClient();
             // services.AddHttpsRedirection(options => {
-            //     options.HttpsPort = 443;
+            //     options.HttpsPort = 7161;
             // });
         }
 

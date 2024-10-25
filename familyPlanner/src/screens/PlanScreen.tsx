@@ -6,7 +6,7 @@ import { useColor } from '../hooks/useColor';
 import { useRoute } from '@react-navigation/native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigate } from '../hooks/useNavigation';
-import { TopBar } from '../components/topBar/TopBar';
+import { TopBar } from '../components/common/topBar/TopBar';
 import { PlannedDayService2 } from '../api/services/plannedDayService2';
 
 export interface PlanScreenProps {

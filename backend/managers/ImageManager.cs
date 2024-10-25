@@ -28,6 +28,17 @@ namespace FamilyPlanner.Managers {
             {
                 // Get current user ID
                 var currentUserUid = contextService.GetCurrentUserUid();
+                var currentUser = await userManager.GetByUidAsync(currentUserUid);
+                if(currentUser == null) {
+                    return null;
+                }
+                if(currentUser.ProfileImage != null) {
+                    var profileImageId = currentUser.ProfileImageId ?? 0;
+                    if(!await DeleteById(profileImageId)) {
+                        return null;
+                    }
+                }
+
                 var credential = GoogleCredential.FromFile("./utils/angular-rhythm-422608-a2-918cdf26a713.json");
                 var storage = StorageClient.Create(credential);
                 // Upload image to GCS
@@ -57,7 +68,8 @@ namespace FamilyPlanner.Managers {
                         Url = imageUrl,
                         UserUid = currentUserUid,
                         CreatedAt = DateTime.UtcNow,
-                        FileType = Path.GetExtension(image.FileName)
+                        FileType = Path.GetExtension(image.FileName),
+                        ObjectName = objectName
                     };
 
                     // Add new image to the database
@@ -84,10 +96,50 @@ namespace FamilyPlanner.Managers {
             }
         }
 
+        public async Task<Image> GetByIdAsync(int id) {
+            var image = await database.Images
+                .FindAsync(id);
+            
+            return image;
+        }
+
 
         public Task<Image> UpdateImage(IFormFile image)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteById(int id) {
+            var image = await GetByIdAsync(id);
+            if(image == null) {
+                return false;
+            }
+
+            try
+            {
+                // Get the object name of the image in GCS
+
+                // Create a credential from the service account key file
+                var credential = GoogleCredential.FromFile("./utils/angular-rhythm-422608-a2-918cdf26a713.json");
+
+                // Create a GCS client
+                var storage = StorageClient.Create(credential);
+
+                // Delete the object from GCS
+                await storage.DeleteObjectAsync(CloudStorageInfo.BucketName, image.ObjectName);
+
+                // Remove the image from the database
+                database.Images.Remove(image);
+
+                await database.SaveChangesAsync();
+
+                return true;
+
+            } catch(Exception ex) {
+                Console.WriteLine($"Error deleting image: {ex.Message}");
+                throw;
+            }
+            return false;
         }
     }
 }

@@ -31,7 +31,8 @@ namespace FamilyPlanner.Managers {
                 EndDate = newTask.EndDate,
                 CreatedByUid = currentUserUid,
                 PlannedTaskId = newTask.PlannedTaskId,
-                AssignedUser = newTask.AssignedUser
+                AssignedUser = newTask.AssignedUser,
+    
             };
             database.Tasks.Add(task);
             try {

@@ -35,6 +35,9 @@ namespace FamilyPlanner.Services {
 
         public async Task<ShoppingList> CreateUpdateShoppingList(string dayKey, ShoppingList list)
         {
+            if(string.IsNullOrEmpty(list.Name)) {
+                return null;
+            }
             Console.WriteLine(list.Name);
             var createdShoppingList = await shoppingListManager.CreateUpdateAsync(list);
             if(createdShoppingList == null) {

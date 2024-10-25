@@ -38,7 +38,8 @@ namespace FamilyPlanner.Managers {
                 Type = newPlannedTask.Type,
                 PlannedDayId = newPlannedTask.PlannedDayId,
                 UserUid = userId,
-                FamilyId = newPlannedTask.FamilyId
+                FamilyId = newPlannedTask.FamilyId,
+                Completed = false
             };
             database.PlannedTasks.Add(plannedTask);
             try {
@@ -66,7 +67,8 @@ namespace FamilyPlanner.Managers {
                 Type = newPlannedTask.Type,
                 PlannedDayId = plannedDayId,
                 UserUid = userId,
-                FamilyId = newPlannedTask.FamilyId
+                FamilyId = newPlannedTask.FamilyId,
+                Completed = false
             };
             database.PlannedTasks.Add(plannedTask);
             try {
@@ -90,7 +92,7 @@ namespace FamilyPlanner.Managers {
             return plannedTasks;
         }
 
-        public async Task<IEnumerable<PlannedTask>> GetAllAsync()
+        public async Task<IEnumerable<PlannedTask>> GetAllAsync(int limit, int page)
         {
             var userId = contextService.GetCurrentUserUid();
             if(userId == null) {
@@ -98,6 +100,8 @@ namespace FamilyPlanner.Managers {
             } 
             var plannedTask = await database.PlannedTasks
                 .Where(p => p.UserUid == userId)
+                .Skip(page)
+                .Take(limit)
                 .ToListAsync();
                 
             return plannedTask;
@@ -136,6 +140,7 @@ namespace FamilyPlanner.Managers {
             existingPlannedTask.AssignedTo = plannedTask.AssignedTo;
             existingPlannedTask.Status = plannedTask.Status;
             existingPlannedTask.Type = plannedTask.Type;
+            existingPlannedTask.Completed = plannedTask.Completed;
 
             try {
                 await database.SaveChangesAsync();

@@ -18,6 +18,17 @@ export class UserService {
         }
     };
 
+    public static async getCurrentUser() {
+        const url = baseUrl + `User/current-user`;
+        try {
+            const response = await axiosInstance.get(url);
+            return response.data as APIResponse;
+        } catch(error) {
+            console.error("Error fetching user by email", error);
+            throw error;
+        }
+    }
+
     public static async getByEmail(email: string) {
         const url = baseUrl + `User/emails/${email}`;
         console.log(email);
@@ -59,6 +70,28 @@ export class UserService {
         try {
             const response = await axiosInstance.put(url, user);
             return response.data as APIResponse;
+        } catch(error) {
+            console.error("Error fetching user: ", error);
+            throw error;
+        }
+    }
+
+    public static async search(query: string) {
+        const url = baseUrl + `User/search/${query}`;
+        console.log(url);
+        try {
+            const response = await axiosInstance.get(url);
+            if(response) {
+                let users: User[] = [];
+                // If response data is an object with a 'data' property containing an array, extract that array
+                if (response.data && Array.isArray(response.data)) {
+                    users = response.data;
+                } else {
+                    console.error("Response data format is not as expected");
+                    return null;
+                }
+                return users;
+            }
         } catch(error) {
             console.error("Error fetching user: ", error);
             throw error;

@@ -146,6 +146,8 @@ namespace FamilyPlanner.Managers {
                 .Include(p => p.PlannedTasks)
                 .Include(p => p.ShoppingLists!)
                     .ThenInclude(s => s.Items)
+                .Include(p => p.ShoppingLists!)
+                    .ThenInclude(s => s.Family)
                 .Include(p => p.Activities)
                 .Include(p => p.Meals)
                 .FirstOrDefaultAsync();
@@ -162,7 +164,10 @@ namespace FamilyPlanner.Managers {
         {
             var plannedDay = await database.PlannedDays
                 .Include(p => p.PlannedTasks)
-                .Include(p => p.ShoppingLists)
+                .Include(p => p.ShoppingLists!)
+                    .ThenInclude(s => s.Items)
+                .Include(p => p.ShoppingLists!)
+                    .ThenInclude(s => s.Family)
                 .Include(p => p.Activities)
                 .Include(p => p.Meals)
                 .FirstOrDefaultAsync(p => p.Id == id);

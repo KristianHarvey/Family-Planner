@@ -1,4 +1,5 @@
 
+using AutoMapper;
 using FamilyPlanner.Managers.Interfaces;
 using FamilyPlanner.Models;
 using FamilyPlanner.Models.InviteModel;
@@ -11,24 +12,37 @@ namespace FamilyPlanner.Controllers {
     [ApiController]
     public class UserController : ControllerBase {
         private readonly IUserManager userManager;
-        public UserController(IUserManager userManager) {
+        private readonly IMapper mapper;
+        public UserController(IUserManager userManager, IMapper mapper) {
             this.userManager = userManager;
+            this.mapper = mapper;
         }
         [HttpPost]
         public async Task<APIResponse> CreateNewUser(UserInput newUser) {
             var createdUser = await userManager.CreateUserAsync(newUser);
-            if(createdUser == null) {
+            var userDTO = mapper.Map<UserDTO>(createdUser);
+            if(userDTO == null) {
                 return new APIResponse("Failed to create new user", true, HttpStatusCode.BadRequest);
             }
-            return new APIResponse(newUser, "Successfully created new user", false, HttpStatusCode.OK);
+            return new APIResponse(userDTO, "Successfully created new user", false, HttpStatusCode.OK);
+        }
+        [HttpGet("current-user")]
+        public async Task<APIResponse> GetCurrentUserFromToken() {
+            var user = await userManager.GetCurrentUserFromToken();
+            var userDTO = mapper.Map<UserDTO>(user);
+            if(userDTO == null) {
+                return new APIResponse("Current user could not be found from token, maybe token is null?", true, HttpStatusCode.BadRequest);
+            }
+            return new APIResponse(userDTO, "Successfully retrieved current user from token", false, HttpStatusCode.OK);
         }
         [HttpGet("{id}")]
         public async Task<APIResponse> GetUserById(int id) {
             var user = await userManager.GetByIdAsync(id);
-            if(user == null) {
+            var userDTO = mapper.Map<UserDTO>(user);
+            if(userDTO == null) {
                 return new APIResponse($"User with id {id} does not exist", true, HttpStatusCode.NotFound);
             }
-            return new APIResponse(user, $"Successfully retrieved user {id}", false, HttpStatusCode.OK);
+            return new APIResponse(userDTO, $"Successfully retrieved user {id}", false, HttpStatusCode.OK);
         }
         [HttpGet("invites")]
         public async Task<APIResponse> GetAllInvites() {
@@ -41,31 +55,35 @@ namespace FamilyPlanner.Controllers {
         [HttpGet("secrets/{uid}")]
         public async Task<APIResponse> GetUserByUid(string uid) {
             var user = await userManager.GetByUidAsync(uid);
-            if(user == null) {
+            var userDTO = mapper.Map<UserDTO>(user);
+            if(userDTO == null) {
                 return new APIResponse($"User with id: {uid} does not exist", true, HttpStatusCode.NotFound);
             }
-            return new APIResponse(user, $"Successfully retrieved user: {uid}", false, HttpStatusCode.OK);
+            return new APIResponse(userDTO, $"Successfully retrieved user: {uid}", false, HttpStatusCode.OK);
         }
         [HttpGet("emails/{email}")]
         public async Task<APIResponse> GetUserByEmail(string email) {
             var user = await userManager.GetByEmailAsync(email.ToLower());
-            if(user == null) {
+            var userDTO = mapper.Map<UserDTO>(user);
+            if(userDTO == null) {
                 return new APIResponse($"User with email {email} does not exist", true, HttpStatusCode.NotFound);
             }
-            return new APIResponse(user, $"Successfully retrieved user with email: {email}", false, HttpStatusCode.OK);
+            return new APIResponse(userDTO, $"Successfully retrieved user with email: {email}", false, HttpStatusCode.OK);
         }
 
         [HttpGet()]
         public async Task<APIResponse> GetAllUsers() {
             var users = await userManager.GetAllAsync();
-            if(users == null) {
+            var userDTOs = mapper.Map<IEnumerable<UserDTO>>(users);
+            if(userDTOs == null) {
                 return new APIResponse($"Failed retrieving all users", true, HttpStatusCode.NotFound);
             }
-            return new APIResponse(users, $"Successfully retrieved all users", false, HttpStatusCode.OK);
+            return new APIResponse(userDTOs, $"Successfully retrieved all users", false, HttpStatusCode.OK);
         }
 
         [HttpPut("{id}")]
-        public async Task<APIResponse> UpdateUser(int id, User user) {
+        public async Task<APIResponse> UpdateUser(int id, UserDTO userDTO) {
+            var user = mapper.Map<User>(userDTO);
             if(!await userManager.UpdateAsync(id, user)) {
                 return new APIResponse("failed to update user", true, HttpStatusCode.InternalServerError);
             }
@@ -107,6 +125,20 @@ namespace FamilyPlanner.Controllers {
         [HttpPost("receive-invite")]
         public async Task ReceiveInvite(Invite invite) {
             await userManager.ReceiveInvite(invite);
+        }
+
+        [HttpGet("search/{query}")]
+        public async Task<IActionResult> Search(string query) {
+            if(!string.IsNullOrEmpty(query) && query.Length >= 3) {
+                var results = await userManager.Search(query);
+                var resultsDTOs = mapper.Map<IEnumerable<UserDTO>>(results);
+                foreach(var result in resultsDTOs) {
+                    Console.WriteLine(result.Id);
+                }
+                return Ok(resultsDTOs);
+            } else {
+                return Ok(new User[0]);
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useColor } from "../hooks/useColor";
 import { useNavigate } from "../hooks/useNavigation";
 import { Font, FontSize, Padding } from "../constants/UIConstants";
-import { TopBar } from "../components/topBar/TopBar";
+import { TopBar } from "../components/common/topBar/TopBar";
 
 export const StartupScreen = () => {
     const { colors } = useColor();

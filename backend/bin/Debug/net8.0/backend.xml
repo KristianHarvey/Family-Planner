@@ -52,7 +52,7 @@
             <param name="plannedDayId"></param>
             <returns></returns>
         </member>
-        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.GetAllPlannedTasksForCurrentUser">
+        <member name="M:FamilyPlanner.Controllers.PlannedTaskController.GetAllPlannedTasksForCurrentUser(System.Int32,System.Int32)">
             <summary>
             Get All Planned Tasks For Current User
             </summary>
@@ -90,76 +90,28 @@
         <member name="M:backend.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:backend.Migrations.ChangedShoppingListField">
+        <member name="T:backend.Migrations.ChangedImageTable">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedShoppingListField.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:backend.Migrations.ChangedImageTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedShoppingListField.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:backend.Migrations.ChangedImageTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedShoppingListField.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:backend.Migrations.ChangedImageTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:backend.Migrations.ChangedShoppingListFieldAgain">
+        <member name="T:backend.Migrations.AddedCompletedState">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedShoppingListFieldAgain.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:backend.Migrations.AddedCompletedState.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedShoppingListFieldAgain.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:backend.Migrations.AddedCompletedState.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:backend.Migrations.ChangedShoppingListFieldAgain.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.ChangedShoppingList">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedShoppingList.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedShoppingList.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedShoppingList.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.ChangedShoppingListItemABit">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedShoppingListItemABit.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedShoppingListItemABit.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedShoppingListItemABit.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.ChangedFamilyModelAgain">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedFamilyModelAgain.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedFamilyModelAgain.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ChangedFamilyModelAgain.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.MadeUserUidForPlannedDayNotNull">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.MadeUserUidForPlannedDayNotNull.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.MadeUserUidForPlannedDayNotNull.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.MadeUserUidForPlannedDayNotNull.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:backend.Migrations.AddedCompletedState.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

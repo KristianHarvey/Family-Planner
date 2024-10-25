@@ -54,7 +54,7 @@ const BarItem: React.FC<BarItemProps> = ( {totalItems, type, iconName, currentUs
                         borderRadius: 35 / 2,
                         borderWidth: selected ? 1 : 0,
                         borderColor: selected ? colors.navbar.icons : 'transparent',
-                    }} source={currentUser.profileImage && currentUser.profileImage.uri ? {uri: currentUser.profileImage.uri} : defaultImage} />
+                    }} source={currentUser && currentUser.profileImage ? {uri: currentUser.profileImage.uri} : defaultImage} />
             </TouchableOpacity>
         ): (
             <TouchableOpacity style={{

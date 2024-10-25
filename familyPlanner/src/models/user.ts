@@ -10,7 +10,6 @@ export interface User {
     lastName: string;
     email: string;
     username: string;
-    password: string;
     profileImage?: Image;
     selectedFamilyId?: number;
     selectedFamily?: Family;

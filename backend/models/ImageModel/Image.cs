@@ -10,5 +10,6 @@ namespace FamilyPlanner.models {
         public Uri? Uri { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? FileType { get; set; }
+        public string? ObjectName { get; set; }
     }
 }

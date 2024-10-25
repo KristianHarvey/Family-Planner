@@ -8,7 +8,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthService } from "../api/services/authService";
 import { useAuth } from "../hooks/useAuth";
 import { Button } from "../components/button/Button";
-import { TopBar } from "../components/topBar/TopBar";
+import { TopBar } from "../components/common/topBar/TopBar";
 
 export const LoginScreen = () => {
     const { colors } = useColor();

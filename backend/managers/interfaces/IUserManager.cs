@@ -8,10 +8,10 @@ namespace FamilyPlanner.Managers.Interfaces {
     public interface IUserManager {
         public Task<User> CreateUserAsync(UserInput newUser);
         public Task<IEnumerable<User>> GetAllAsync();
+        public Task<User> GetCurrentUserFromToken();
         public Task<User> GetByIdAsync(int id);
         public Task<User> GetByUidAsync(string uid);
         public Task<User> GetByEmailAsync(string email);
-
         public Task<bool> SendInviteToUser(Invite invite);
         public Task<List<Invite>> GetAllInvites();
         public Task<bool> ReceiveInvite(Invite invite);
@@ -20,6 +20,7 @@ namespace FamilyPlanner.Managers.Interfaces {
         public Task<bool> UpdateSelectedFamily(int userId, int familyId);
         public Task<RefreshToken> GetRefreshTokenAsync(string UserUid);
         public Task SaveOrUpdateRefreshTokenAsync(string userId, string refreshToken);
+        public Task<IEnumerable<User>> Search(string query);
         public Task<bool> UpdateAsync(int id, User user);
     }
 }

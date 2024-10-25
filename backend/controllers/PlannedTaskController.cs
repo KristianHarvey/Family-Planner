@@ -46,8 +46,8 @@ namespace FamilyPlanner.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpGet("user/")]
-        public async Task<APIResponse> GetAllPlannedTasksForCurrentUser() {
-            var plannedTasks = await plannedTaskManager.GetAllAsync();
+        public async Task<APIResponse> GetAllPlannedTasksForCurrentUser(int limit = 20, int page = 0) {
+            var plannedTasks = await plannedTaskManager.GetAllAsync(limit, page);
             if(plannedTasks == null) {
                 return new APIResponse($"Failed to retrieved all planned tasks for current user", true, HttpStatusCode.BadRequest);
             }

@@ -3,7 +3,7 @@ import { useAuth } from "../../../hooks/useAuth"
 import { FamilyService } from "../../../api/services/familyService";
 import { Family } from "../../../models/family";
 import { FamilySelectorWidget } from "../../../components/widget/family/familySelectorWidget/FamilySelectorWidget";
-import { TopBar } from "../../../components/topBar/TopBar";
+import { TopBar } from "../../../components/common/topBar/TopBar";
 import { ActivityIndicator, RefreshControl, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { useColor } from "../../../hooks/useColor";
 import { UserService } from "../../../api/services/userService";
@@ -49,10 +49,9 @@ export const EditFamilyScreen = ({}) => {
     };
 
     const updateUserInfo = async() => {
-        const response = await UserService.getById(auth.user.id ?? 0);
+        const response = await UserService.getCurrentUser();
         if(response) {
-            const updatedUser = { ...currentUser, ...response.data };
-            setCurrentUser(updatedUser);
+            setCurrentUser(response.data);
         }
     }
 
@@ -71,7 +70,7 @@ export const EditFamilyScreen = ({}) => {
         await updateFamilies();
         await getSelectedFamily();
         setUpdatedSelectedFamily(false);
-    }, [families, currentUser, updatedSelectedFamily]);
+    }, [families, currentUser, updatedSelectedFamily, selectedFamily]);
 
     React.useEffect(() => {
         fetchProfileInfo();
@@ -116,6 +115,7 @@ export const EditFamilyScreen = ({}) => {
     }, [fetchProfileInfo]);
 
     const onSelected = ({hex}) => {
+        console.log(hex);
         selectedFamily.familyColor = hex;
         console.log("Selected color: ", selectedFamily);
         setSelectedFamily(selectedFamily);
@@ -130,7 +130,7 @@ export const EditFamilyScreen = ({}) => {
             {colorSelectMode ? (
                 <View style={{ flex: 1, marginBottom: Padding.XLarge * 3, backgroundColor: colors.background_main, justifyContent: 'center' }}>
                     <ColorPicker
-                    value={selectedFamily.familyColor ?? colors.textCard.main}
+                    value={selectedFamily ? selectedFamily.familyColor : colors.textCard.main}
                     onComplete={onSelected}
                     style={{
                         flex: 1,

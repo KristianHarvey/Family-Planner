@@ -19,7 +19,6 @@ namespace FamilyPlanner.Db {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {
 
         }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Family> Families { get; set; }
@@ -99,6 +98,11 @@ namespace FamilyPlanner.Db {
                 .HasMany(f => f.PlannedDays)
                 .WithOne(p => p.Family)
                 .HasForeignKey(p => p.FamilyId);
+
+            modelBuilder.Entity<ShoppingList>()
+                .HasOne(s => s.Family)
+                .WithMany()
+                .HasForeignKey(s => s.FamilyId);
             
             modelBuilder.Entity<Meal>()
                 .HasOne(m => m.PlannedDay)

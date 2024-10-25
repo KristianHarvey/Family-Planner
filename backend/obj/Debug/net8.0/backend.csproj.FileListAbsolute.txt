@@ -339,3 +339,4 @@ C:/Dokumenter/Informatikk/Semester 4/Random projects/Family-Planner/backend/bin/
 /Users/kristianharvey/Documents/software-practice/Family-Planner/backend/bin/Debug/net8.0/System.Management.dll
 /Users/kristianharvey/Documents/software-practice/Family-Planner/backend/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Management.dll
 /Users/kristianharvey/Documents/software-practice/Family-Planner/backend/bin/Debug/net8.0/utils/angular-rhythm-422608-a2-918cdf26a713.json
+/Users/kristianharvey/Documents/software-practice/Family-Planner/backend/bin/Debug/net8.0/AutoMapper.dll

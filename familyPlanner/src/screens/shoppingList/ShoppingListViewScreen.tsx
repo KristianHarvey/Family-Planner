@@ -4,12 +4,12 @@ import { ShoppingList, ShoppingListItem } from "../../models/shoppingList";
 import { ActivityIndicator, FlatList, Modal, RefreshControl, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Font, FontSize, Padding } from "../../constants/UIConstants";
-import { TopBar } from "../../components/topBar/TopBar";
+import { TopBar } from "../../components/common/topBar/TopBar";
 import { CustomSelect } from "../../components/customSelect/CustomSelect";
 import { KassalappProduct } from "../../models/kassalappModel";
 import { KassalappService } from "../../api/services/kassalAppService";
 import filter from "lodash.filter";
-import { SearchItems } from "../../components/search/searchItems.tsx/SearchItems";
+import { SearchItems } from "../../components/common/search/searchItems.tsx/SearchItems";
 import { useNavigate } from "../../hooks/useNavigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ShoppingListItemWidget } from "../../components/widget/shoppingList/shoppingListItemWidget/ShoppingListItemWidget";
@@ -20,6 +20,9 @@ import { DayKeyUtils } from "../../utils/DayKeyUtils";
 import { ShoppingListService } from "../../api/services/shoppingListService";
 import Feather from "react-native-vector-icons/Feather";
 import { ShoppingListItemEditWidget } from "../../components/widget/shoppingList/shoppingListItemWidget/ShoppingListItemEditWidget";
+import { Family } from "../../models/family";
+import { useAuth } from "../../hooks/useAuth";
+import { UserService } from "../../api/services/userService";
 
 interface ShoppingListRouteProps {
     shoppingListId?: number;
@@ -36,6 +39,7 @@ const ShoppingListViewScreen = () => {
     console.log(shoppingListId, cameFrom);
     const { colors } = useColor();
     const navigate = useNavigate();
+    const auth = useAuth();
     const [searchQuery, setSearchQuery] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
     const [kassalappItems, setKassalappItems] = React.useState<KassalappProduct[]>([]);
@@ -45,6 +49,7 @@ const ShoppingListViewScreen = () => {
     const [editState, setEditState] = React.useState(false);
     const [plannedDayKey, setPlannedDayKey] = React.useState<string>('');
     const [refreshing, setRefreshing] = React.useState(false);
+    const [currentUser, setCurrentUser] = React.useState(auth.user);
     // const [changedShoppingList, setChangedShoppingList] = React.useState(shoppingList);
 
     // React.useEffect(() => {
@@ -60,6 +65,13 @@ const ShoppingListViewScreen = () => {
         setIsLoading(false);
     }
 
+    const fetchCurrentUser = React.useCallback(async() => {
+        const response = await UserService.getById(auth.user.id ?? 0);
+        if(response) {
+            setCurrentUser(response.data);
+        }
+    }, [currentUser]);
+
     React.useEffect(() => {
         fetchShoppingList();
     }, [shoppingListId]);
@@ -67,6 +79,11 @@ const ShoppingListViewScreen = () => {
     React.useEffect(() => {
         setIsLoading(true);
         fetchProductsFromQuery('');
+    }, []);
+
+    React.useEffect(() => {
+        fetchShoppingList();
+        fetchCurrentUser();
     }, []);
 
     // useFocusEffect(
@@ -134,7 +151,7 @@ const ShoppingListViewScreen = () => {
                 id: currentShoppingList.id ?? 0,
                 name: currentShoppingList.name ?? '',
                 items: currentShoppingList.items ?? [],
-                
+                familyId: currentShoppingList.familyId ?? 0
             });
             if(response) {
                 setCurrentShoppingList(response.data);
@@ -143,7 +160,8 @@ const ShoppingListViewScreen = () => {
             const response = await ShoppingListService.update(currentShoppingList.id ?? 0, {
                 id: currentShoppingList.id ?? 0,
                 name: currentShoppingList.name ?? '',
-                items: currentShoppingList.items ?? []
+                items: currentShoppingList.items ?? [],
+                familyId: currentShoppingList.familyId ?? 0
             });
             if(response) {
                 setCurrentShoppingList(response.data);
@@ -218,13 +236,38 @@ const ShoppingListViewScreen = () => {
         if(plannedDayKey) {
             const response = await PlannedDayService.createUpdateShoppingList(plannedDayKey, {
                 id: currentShoppingList.id ?? 0,
-                name: currentShoppingList.name,
+                name: currentShoppingList.name ?? '',
                 items: currentShoppingList.items ?? [],
+                familyId: currentShoppingList.familyId ?? 0
             });
             console.log(plannedDayKey);
             if(response) {
                 console.log(response);
                 setCurrentShoppingList(response.data)
+            }
+        }
+    }
+
+    const handleSaveShoppingListForFamily = async(family: Family) => {
+        if(currentShoppingList.plannedDay) {
+            const response = await PlannedDayService.createUpdateShoppingList(currentShoppingList.plannedDay.dayKey, {
+                id: currentShoppingList.id ?? 0,
+                name: currentShoppingList.name ?? '',
+                items: currentShoppingList.items ?? [],
+                familyId: family.id ?? 0
+            });
+            if(response) {
+                setCurrentShoppingList(response.data);
+            }
+        } else {
+            const response = await ShoppingListService.update(currentShoppingList.id ?? 0, {
+                id: currentShoppingList.id ?? 0,
+                name: currentShoppingList.name ?? '',
+                items: currentShoppingList.items ?? [],
+                familyId: family.id ?? 0
+            });
+            if(response) {
+                setCurrentShoppingList(response.data);
             }
         }
     }
@@ -344,6 +387,8 @@ const ShoppingListViewScreen = () => {
                     contentContainerStyle={{flexGrow: 1, backgroundColor: colors.background.main}}
                     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
                         <ShoppingListInfoWidget 
+                        currentUser={currentUser}
+                        onFamilyAddPress={handleSaveShoppingListForFamily}
                         shoppingList={currentShoppingList}/>
                         {!currentShoppingList.plannedDay && (
                             <ShoppingListPlanWidget 

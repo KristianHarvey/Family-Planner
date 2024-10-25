@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "XmnpZ1p6KCj4XDca7Q/e1LqZdmfTYTzuRsRIAC9PRFJqsP+PS0bzT7wHJvobfvXcAIk4C5/5PPSSBW5llgserA==",
+  "dgSpecHash": "5deKl2ZauuPhLIMnIOh/27uJWTyNh1MRGPcRO0to6GaEXSi81JLivrPefFuIkmhlPRx/oh9B20mmR2nifjnhhQ==",
   "success": true,
   "projectFilePath": "/Users/kristianharvey/Documents/software-practice/Family-Planner/backend/backend.csproj",
   "expectedPackageFiles": [
+    "/Users/kristianharvey/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/Users/kristianharvey/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/kristianharvey/.nuget/packages/google.api.gax/4.8.0/google.api.gax.4.8.0.nupkg.sha512",
     "/Users/kristianharvey/.nuget/packages/google.api.gax.rest/4.8.0/google.api.gax.rest.4.8.0.nupkg.sha512",

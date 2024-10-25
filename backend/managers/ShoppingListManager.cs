@@ -38,6 +38,7 @@ namespace FamilyPlanner.Managers {
                 Name = newShoppingList.Name,
                 FamilyId = newShoppingList.FamilyId,
                 UserUid = currentUserUid,
+                Completed = false
             };
             database.ShoppingLists.Add(shoppingList);
             await database.SaveChangesAsync();
@@ -69,7 +70,8 @@ namespace FamilyPlanner.Managers {
             {
                 FamilyId = newShoppingList.FamilyId,
                 UserUid = currentUserUid,
-                PlannedDayId = plannedDayId
+                PlannedDayId = plannedDayId,
+                Completed = false
             };
             database.ShoppingLists.Add(shoppingList);
             await database.SaveChangesAsync();
@@ -88,7 +90,7 @@ namespace FamilyPlanner.Managers {
             return shoppingList;
         }
 
-        public async Task<IEnumerable<ShoppingList>> GetAllAsync()
+        public async Task<IEnumerable<ShoppingList>> GetAllAsync(int limit, int page)
         {
             var currentUserUid = contextService.GetCurrentUserUid();
             if(currentUserUid == null) {
@@ -96,8 +98,11 @@ namespace FamilyPlanner.Managers {
             }
             var shoppingLists = await database.ShoppingLists
                 .Where(s => s.UserUid == currentUserUid)
+                .Skip(page)
                 .Include(s => s.Items)
                 .Include(s => s.PlannedDay)
+                .Include(s => s.Family)
+                .Take(limit)
                 .ToListAsync();
 
             return shoppingLists;
@@ -118,6 +123,7 @@ namespace FamilyPlanner.Managers {
             var shoppingList = await database.ShoppingLists
                 .Include(s => s.Items)
                 .Include(s => s.PlannedDay)
+                .Include(s => s.Family)
                 .FirstOrDefaultAsync(s => s.Id == id);
             
             return shoppingList;
@@ -145,8 +151,11 @@ namespace FamilyPlanner.Managers {
                 }
 
             }
-            existingShoppingList.FamilyId = shoppingList.FamilyId;
+            if(shoppingList.FamilyId != null && shoppingList.FamilyId != 0) {
+                existingShoppingList.FamilyId = shoppingList.FamilyId;
+            }
             existingShoppingList.Items = createdOrUpdatedItems;
+            existingShoppingList.Completed = shoppingList.Completed;
 
             try {
                 await database.SaveChangesAsync();

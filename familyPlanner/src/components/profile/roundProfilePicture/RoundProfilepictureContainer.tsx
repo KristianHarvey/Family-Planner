@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from "react";
 import { Platform, StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
 import FormData from 'form-data';
 import { useColor } from "../../../hooks/useColor";
-import { ImageUploader } from "../../imagePicker/ImagePicker";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { ImageService } from "../../../api/services/imageService";
@@ -14,10 +13,10 @@ interface Props extends PropsWithChildren {
     canUploadPicture?: boolean;
     containerStyle?: StyleProp<ViewStyle>; // Additional style prop for the container
     size?: number;
-    setShouldReload?: (value: boolean) => void;
+    onProfileImageUpload?: (value: boolean) => void;
 }
 
-export const RoundProfilePictureContainer: React.FC<Props> = ({canUploadPicture, children, containerStyle, size, setShouldReload, ...rest}) => {
+export const RoundProfilePictureContainer: React.FC<Props> = ({canUploadPicture, children, containerStyle, size, onProfileImageUpload, ...rest}) => {
     const { colors } = useColor();
     const auth = useAuth();
     const currentUser = auth.user ?? null;
@@ -61,15 +60,11 @@ export const RoundProfilePictureContainer: React.FC<Props> = ({canUploadPicture,
                 const imageResponse = await ImageService.UploadImage(formData);
                 console.log(imageResponse.data);
                 if(imageResponse) {
-                    setShouldReload(true);
+                    onProfileImageUpload(true);
                 }
                 // setImage(result.assets[0].uri);
             }
         }
-    }
-
-    const handleUploadImage = async() => {
-        const image = await ImageUploader();
     }
 
     return (

@@ -9,6 +9,8 @@ namespace FamilyPlanner.Models.ShoppingListModel {
         public int Id { get; set; }
         public string Name { get; set; }
         public int? FamilyId { get; set; }
+        public Family? Family { get; set; }
+        public bool Completed { get; set; }
         public string? UserUid { get; set; }
         public List<ShoppingListItem>? Items { get; set; }
         public DateTime? StartDate { get; set; }

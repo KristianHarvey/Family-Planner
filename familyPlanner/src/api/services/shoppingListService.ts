@@ -32,19 +32,24 @@ export class ShoppingListService {
             const response = await axiosInstance.put(url, shoppingList);
             return response.data as APIResponse;
         } catch(error) {
-            console.error("Failed to create shopping list: ", error);
+            console.error("Failed to update shopping list: ", error);
             throw error;
         }
     }
 
-    public static async getAllForCurrentUser() {
-        const url = baseUrl + "ShoppingList";
+    public static async getAllForCurrentUser(limit?: number, page?: number) {
+        let url = '';
+        if(limit || page) {
+            url = baseUrl + `ShoppingList?limit=${limit}&page=${page}`;
+        } else {
+            url = baseUrl + `ShoppingList`;
+        }
         console.log(url);
         try {
             const response = await axiosInstance.get(url);
             return response.data as APIResponse;
         } catch(error) {
-            console.error("Failed to create shopping list: ", error);
+            console.error("Failed to get all shopping list: ", error);
             throw error;
         }
     }

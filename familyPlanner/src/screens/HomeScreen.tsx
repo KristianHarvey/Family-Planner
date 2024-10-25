@@ -6,7 +6,7 @@ import BottomBar from "../components/bottomBar/BottomBar";
 import Icon from "react-native-vector-icons/Ionicons";
 import React from "react";
 import DisplayCard from "../components/displayCard/DisplayCard";
-import { TopBar } from "../components/topBar/TopBar";
+import { TopBar } from "../components/common/topBar/TopBar";
 import { useAuth } from "../hooks/useAuth";
 
 const HomeScreen = () => {

@@ -1,10 +1,10 @@
 import React from "react"
-import { TextInput, View } from "react-native"
+import { SafeAreaView, TextInput, View } from "react-native"
 import { User } from "../../models/user";
 import { useColor } from "../../hooks/useColor";
-import { TopBar } from "../../components/topBar/TopBar";
+import { TopBar } from "../../components/common/topBar/TopBar";
 import { Padding } from "../../constants/UIConstants";
-import { SearchUserInput } from "../../components/search/SearchUserInput";
+import { SearchUserInput } from "../../components/common/search/SearchUserInput";
 import { Button } from "../../components/button/Button";
 import { FamilyService } from "../../api/services/familyService";
 import { Family } from "../../models/family";
@@ -31,7 +31,7 @@ export const CreateFamilyScreen = () => {
     }
 
     return (
-        <View
+        <SafeAreaView
         style={{flex: 1, backgroundColor: colors.background.main}}>
             <TopBar leftIcon="arrow-back" middleText="Lag ny familie" cameFromScreen="Profile"/>
             <View
@@ -49,6 +49,6 @@ export const CreateFamilyScreen = () => {
                 />
                 <Button title="Lag" onPress={handleCreateNewFamily}/>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }

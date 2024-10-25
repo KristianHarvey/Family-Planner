@@ -9,6 +9,7 @@ import MainNavigation from './src/navigation/MainNavigation';
 import { useFonts } from 'expo-font';
 import { useColor } from './src/hooks/useColor';
 import { LogBox } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 LogBox.ignoreLogs(['...']);
 
 // SplashScreen.preventAutoHideAsync();
@@ -31,13 +32,13 @@ export default function App() {
   }
   return (
       <SafeAreaProvider>
-            <NavigationContainer>
-                <AuthContextProvider>
-                {/* <View style={{ flex: 1, backgroundColor: colors.background.main }} onLayout={onLayoutRootView}> */}
-                  <MainNavigation />
-                {/* </View> */}
-                </AuthContextProvider>
-            </NavigationContainer>
+        <NavigationContainer>
+            <AuthContextProvider>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <MainNavigation />
+              </GestureHandlerRootView>
+            </AuthContextProvider>
+        </NavigationContainer>
     </SafeAreaProvider>
   );
 }

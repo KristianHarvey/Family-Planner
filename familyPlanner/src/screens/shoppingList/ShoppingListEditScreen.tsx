@@ -1,10 +1,10 @@
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import { TopBar } from "../../components/topBar/TopBar"
+import { TopBar } from "../../components/common/topBar/TopBar"
 import { ShoppingList, ShoppingListItem } from "../../models/shoppingList"
 import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { useColor } from "../../hooks/useColor";
-import { SearchItems } from "../../components/search/searchItems.tsx/SearchItems";
+import { SearchItems } from "../../components/common/search/searchItems.tsx/SearchItems";
 import { useNavigate } from "../../hooks/useNavigation";
 import { ShoppingListItemView } from "../../components/shoppingList/shoppingListItemView/ShoppingListItemView";
 import { Font, FontSize, Padding } from "../../constants/UIConstants";

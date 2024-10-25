@@ -2,6 +2,8 @@ import { Family } from "../models/family";
 import { User } from "../models/user";
 import { DayKeyConstants } from "./DayKeyConstants";
 
+export const SERVEOURL = process.env.SERVEO_URL;
+
 export enum ModelKey {
     INVALID = "INVALID",
     FAMILY = "FAMILY",

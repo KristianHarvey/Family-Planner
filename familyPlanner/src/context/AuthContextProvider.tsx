@@ -70,13 +70,14 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({childre
         try {
             const response = await AuthService.getTokenInfo();
             if(response) {
+                // Handle successful token retrieval
                 const responseToken = response.data;
                 const tokenInfo: TokenInfo = {
                     userUid: responseToken.uid,
                     role: responseToken.role,
                     expiryDate: new Date(responseToken.expiryDate)
                 };
-
+    
                 const userResponse = await UserService.getByUid(tokenInfo.userUid!);
                 setUser(userResponse.data);
                 setUserUid(tokenInfo.userUid!);
@@ -87,17 +88,24 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({childre
                 setIsAuthenticated(false);
                 throw new Error('Failed to update credentials: ');
             }
-
+    
         } catch(error) {
             console.error("Failed to update credentials: ", error);
-
+    
             // If updating credentials fails, attempt to refresh the token
             try {
                 const refreshResponse = await AuthService.refreshToken();
                 if (refreshResponse) {
                     await AsyncStorage.setItem('AccessToken', refreshResponse.accessToken!);
                     await AsyncStorage.setItem('RefreshToken', refreshResponse.refreshToken!);
-
+    
+                    // Check if refreshResponse.refreshToken is null or empty
+                    if(!refreshResponse.refreshToken) {
+                        console.log("Refresh token is null or empty");
+                        setIsAuthenticated(false);
+                        return;
+                    }
+    
                     // Retry updating credentials
                     await updateCredentials();
                 } else {

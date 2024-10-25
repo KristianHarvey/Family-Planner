@@ -13,6 +13,7 @@ import { ShoppingListWidget } from "../../widget/shoppingList/shoppingListWidget
 import { ShoppingListWidgetBase } from "../../widget/shoppingList/shoppingListWidget/ShoppingListWidgetBase";
 import { ShoppingList } from "../../../models/shoppingList";
 import { SplitItemTextView } from "../../atoms/splitItemTextView/SplitItemTextView";
+import { useAuth } from "../../../hooks/useAuth";
 
 interface PlannedTaskListCardProps {
     plannedDay?: PlannedDay;
@@ -21,6 +22,8 @@ interface PlannedTaskListCardProps {
 
 export const PlanListCard: React.FC<PlannedTaskListCardProps> = ({plannedDay, currentDate}) => {
     const { colors } = useColor();
+    const auth = useAuth();
+    const currentUser = auth.user;
     // const navigation = useNavigation<NativeStackNavigationProp<any>>();
     const navigate = useNavigate();
 
@@ -52,6 +55,8 @@ export const PlanListCard: React.FC<PlannedTaskListCardProps> = ({plannedDay, cu
                     <SplitItemTextView text="Oppgaver"/>
                     {plannedDay.plannedTasks?.map((plannedtask, index) => (
                         <WidgetBase
+                            familyType={plannedtask.familyId === 0}
+                            familyColor={plannedtask.family ? plannedtask.family.familyColor : colors.textCard.main}
                             key={index}
                             pressable
                             backgroundColor={colors.textCard.main}
@@ -79,8 +84,10 @@ export const PlanListCard: React.FC<PlannedTaskListCardProps> = ({plannedDay, cu
                         shoppingList={shoppingList}/>
                     ))}
                     <SplitItemTextView text="Aktiviteter"/>
-                    {plannedDay.shoppingLists && plannedDay.activities.map((activity, index) => (
+                    {plannedDay.activities && plannedDay.activities.map((activity, index) => (
                         <WidgetBase
+                        familyType={activity.familyId === 0}
+                        familyColor={activity.family ? activity.family.familyColor : colors.textCard.main}
                         key={index}
                         backgroundColor={colors.textCard.main}>
                             <Text

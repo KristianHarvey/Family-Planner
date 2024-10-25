@@ -10,7 +10,7 @@ import { PlannedDay } from "../models/plannedDay";
 import Feather from "react-native-vector-icons/Feather";
 import { PlannedTaskCreationScreen } from "./PlannedTaskCreationScreen";
 import { useNavigate } from "../hooks/useNavigation";
-import { TopBar } from "../components/topBar/TopBar";
+import { TopBar } from "../components/common/topBar/TopBar";
 import { CustomCard } from "../components/customCard/CustomCard";
 import { AgendaSectionHeader } from "react-native-calendars/src/expandableCalendar/AgendaListsCommon";
 import CalendarHeader from "react-native-calendars/src/calendar/header";
